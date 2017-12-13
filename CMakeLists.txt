@@ -1,0 +1,70 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(cdr CXX)
+
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE )
+endif()
+
+# set version info
+set(CDR_MAJOR_VERSION 0)
+set(CDR_MINOR_VERSION 1)
+set(CDR_PATCH_VERSION 0)
+set(CDR_VERSION ${CDR_MAJOR_VERSION}.${CDR_MINOR_VERSION}.${CDR_PATCH_VERSION})
+
+if (UNIX)
+  macro (add_library _name)
+    _add_library(${ARGV})
+    if (TARGET ${_name})
+      SET_TARGET_PROPERTIES(${_name}
+        PROPERTIES
+            VERSION ${CDR_VERSION}
+            # SOVERSION 0.0.0
+        )
+    endif()
+  endmacro()
+endif (UNIX)
+
+# compile options
+add_compile_options(
+  -Wall
+  -g
+  -O2)
+
+# allow external projects
+include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+
+# add source
+add_subdirectory(include)
+add_subdirectory(src)
+
+set(${PROJECT_NAME}_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+set(${PROJECT_NAME}_LIBRARIES cdr)
+configure_file(
+  ${PROJECT_NAME}.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.cmake
+  @ONLY
+  )
+install(EXPORT cdr DESTINATION lib/cmake/cdr)
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.cmake
+  DESTINATION lib/cmake/cdr COMPONENT dev
+  RENAME ${PROJECT_NAME}Config.cmake
+  PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+  )
+
+# unit-tests
+option(TESTS "Enable unit-tests" OFF)
+if(TESTS)
+  ExternalProject_Add(
+    googletest
+    SOURCE_DIR ${PROJECT_SOURCE_DIR}/ext/googletest
+    CMAKE_ARGS -DBUILD_GMOCK=ON -DBUILD_GTEST=ON -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/googletest
+    )
+  
+  include(CTest)
+  enable_testing()
+  
+  # add test dir
+  add_subdirectory(test)
+endif()
+
