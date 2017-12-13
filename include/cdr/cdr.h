@@ -1,6 +1,10 @@
 #ifndef _CDR_H_
 #define _CDR_H_
 
+#ifndef __STDC_LIMIT_MACROS
+#define __STDC_LIMIT_MACROS
+#endif
+
 #include <errno.h>
 #include <string.h>
 #include <stdarg.h>
