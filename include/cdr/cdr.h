@@ -84,7 +84,7 @@ struct cdrItem
     bool asString (std::string& value) const;
 
     cdrKey_t     mKey;
-    u_int		mIndex;
+    u_int        mIndex;
 
     typedef std::pair<const cdrKey_t, cdrItem> itemPair;
     itemPair*   mPair;
