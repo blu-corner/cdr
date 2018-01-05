@@ -8,6 +8,8 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE )
 endif()
 
+option(DEBUG "Enable debug build" OFF)
+
 # set version info
 set(CDR_MAJOR_VERSION 0)
 set(CDR_MINOR_VERSION 1)
@@ -28,10 +30,14 @@ if (UNIX)
 endif (UNIX)
 
 # compile options
-add_compile_options(
-  -Wall
-  -g
-  -O2)
+add_compile_options(-Wall)
+if (DEBUG)
+  message("cdr DEBUG: ON")
+  add_compile_options(-g3)
+else ()
+  message("cdr DEBUG: OFF")
+  add_compile_options(-g -O2)
+endif (DEBUG)
 
 # allow external projects
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
