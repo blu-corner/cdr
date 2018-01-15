@@ -47,6 +47,18 @@
 %ignore CommonDataRepresentation::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
 %ignore CommonDataRepresentation::cdr::setDateTime (const cdrKey_t& key, time_t value);
 
+// simple exception handler
+%exception {
+    try {
+        $action
+    } catch (std::exception &e) {
+        std::string s("cdr-error: "), s2(e.what());
+        s = s + s2;
+        SWIG_exception(SWIG_RuntimeError, s.c_str());
+    }
+}
+
+// make cdr feel like a managed language
 %extend CommonDataRepresentation::cdr {
 
     int64_t getInt64 (const cdrKey_t& key) const {

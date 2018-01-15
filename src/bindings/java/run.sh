@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Hello World"
+LD_LIBRARY_PATH=`pwd`/../:$LD_LIBRARY_PATH java -cp `pwd`/CdrJNI.jar:`pwd` example

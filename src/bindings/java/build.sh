@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 
-javac example.java
+javac -cp `pwd`/CdrJNI.jar example.java
