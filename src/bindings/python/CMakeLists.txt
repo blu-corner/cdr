@@ -1,7 +1,9 @@
 # Include python
+set(Python_ADDITIONAL_VERSIONS 2.7)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_PATH})
 
+# set the flags for swig
 set(CMAKE_SWIG_FLAGS "")
 set_source_files_properties(../cdr.py.i PROPERTIES CPLUSPLUS ON)
 
@@ -14,17 +16,6 @@ set(PYTHON_INSTALL_FILES
   ${CMAKE_CURRENT_BINARY_DIR}/Cdr.py
   ${CMAKE_CURRENT_BINARY_DIR}/_Cdr.so)
 
-# Configure setup.py and copy to output directory
-set(SETUP_PY_IN ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in)
-set(SETUP_PY_OUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
-configure_file(${SETUP_PY_IN} ${SETUP_PY_OUT})
-
 # Declare install target for python
-# install(TARGETS Cdr
-#   COMMAND "${PYTHON_EXECUTABLE} setup.py"
-#   COMPONENT Cdr)
-
-# Install target to call setup.py
-add_custom_target(install-python
-  DEPENDS _swig_example
-  COMMAND python ${SETUP_PY_OUT} install)
+install(FILES ${PYTHON_INSTALL_FILES}
+  DESTINATION lib/python)

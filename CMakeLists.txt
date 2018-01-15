@@ -41,7 +41,8 @@ else ()
   add_compile_options(-g -O2)
 endif (DEBUG)
 
-# allow external projects
+# extra cmake code
+include(${PROJECT_SOURCE_DIR}/cmake/UseJava.cmake)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 # add source
