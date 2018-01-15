@@ -15,7 +15,7 @@ $ make install
 
 ## Bindings
 
-Requires swig, python-dev, java, mono-mcs
+Requires swig, python-dev, java, mono-mcs:
 
 ```bash
 $ cmake -DTESTS=ON -DSWIG=ON ../
@@ -24,10 +24,20 @@ $ make install
 
 ### Python
 
-Run example
+Run example:
 
 ```bash
 $ cd build/install/lib/python
 $ LD_LIBRARY_PATH=../:$LD_LIBRARY_PATH python example.py
+```
+
+### Java
+
+Run example:
+
+```bash
+$ cd build/install/lib/java
+$ sh build.sh
+$ sh run.sh
 ```
 
