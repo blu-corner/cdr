@@ -13,21 +13,31 @@ swig_add_module(Cdr java ../cdr.java.i)
 swig_link_libraries(Cdr cdr ${JNI_LIBRARIES})
 
 set(CMAKE_JAR_CLASSES_PREFIX com/neueda/cdr)
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_JAR_CLASSES_PREFIX})
 
-# file(GLOB JAVA_SRC_FILES ${CMAKE_CURRENT_BINARY_DIR}/*.java)
-# file(COPY ${JAVA_SRC_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_JAR_CLASSES_PREFIX})
-# file(GLOB JAVA_JAR_SRC_FILES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_JAR_CLASSES_PREFIX}/*.java)
-
-# add_jar(CdrJNI
-#   SOURCES
-#   ${JAVA_JAR_SRC_FILES})
-# add_dependencies(CdrJNI Cdr)
+add_jar(CdrJNI
+  SOURCES
+  ${CMAKE_CURRENT_BINARY_DIR}/cdrDateTime.java
+  ${CMAKE_CURRENT_BINARY_DIR}/Cdr.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__pairT_long_long_const_CommonDataRepresentation__cdrItem_t.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_time_t.java
+  ${CMAKE_CURRENT_BINARY_DIR}/cdrItem.java
+  ${CMAKE_CURRENT_BINARY_DIR}/CdrJNI.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__string.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_tm.java
+  ${CMAKE_CURRENT_BINARY_DIR}/cdrItemType.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_double.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__vectorT_CommonDataRepresentation__cdrItem_const_p_t.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_u_int.java
+  ${CMAKE_CURRENT_BINARY_DIR}/cdr.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_p_std__vectorT_CommonDataRepresentation__cdr_t.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__vectorT_CommonDataRepresentation__cdr_t.java
+  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_void.java
+  )
 
 # Files to install with Java
 set(JAVA_INSTALL_FILES
-  #  CdrJNI
-  ${CMAKE_CURRENT_BINARY_DIR}/_Cdr.so)
+  ${CMAKE_CURRENT_BINARY_DIR}/CdrJNI.jar
+  ${CMAKE_CURRENT_BINARY_DIR}/libCdr.so)
 
 # Declare install target for java
 install(FILES ${JAVA_INSTALL_FILES}
