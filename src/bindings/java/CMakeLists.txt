@@ -36,6 +36,9 @@ add_jar(CdrJNI
 
 # Files to install with Java
 set(JAVA_INSTALL_FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/run.sh
+  ${CMAKE_CURRENT_BINARY_DIR}/build.sh
+  ${CMAKE_CURRENT_BINARY_DIR}/example.java
   ${CMAKE_CURRENT_BINARY_DIR}/CdrJNI.jar
   ${CMAKE_CURRENT_BINARY_DIR}/libCdr.so)
 
