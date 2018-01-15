@@ -133,6 +133,7 @@ public:
     bool getDouble (const cdrKey_t& key, double& value) const;
 
     void setInteger (const cdrKey_t& key, int64_t value);
+    
     bool getInteger (const cdrKey_t& key, int64_t& value) const;
     bool getInteger (const cdrKey_t& key, uint64_t& value) const;
     bool getInteger (const cdrKey_t& key, int32_t& value) const;

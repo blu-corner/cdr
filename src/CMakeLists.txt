@@ -10,3 +10,10 @@ add_library(cdr SHARED
 install(TARGETS cdr EXPORT cdr
   LIBRARY DESTINATION lib)
 
+
+if(SWIG)
+  find_package(SWIG REQUIRED)
+  include(${SWIG_USE_FILE})
+  
+  add_subdirectory(bindings)
+endif()

@@ -8,7 +8,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE )
 endif()
 
+# options
 option(DEBUG "Enable debug build" OFF)
+option(SWIG "Enable swig bindings" OFF)
 
 # set version info
 set(CDR_MAJOR_VERSION 0)
