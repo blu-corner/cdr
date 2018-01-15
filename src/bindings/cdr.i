@@ -43,6 +43,9 @@
 %ignore CommonDataRepresentation::cdr::const_iterator;
 %ignore CommonDataRepresentation::cdr::begin;
 %ignore CommonDataRepresentation::cdr::end;
+%ignore CommonDataRepresentation::cdr::getDateTime (const cdrKey_t& key, time_t& value) const;
+%ignore CommonDataRepresentation::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
+%ignore CommonDataRepresentation::cdr::setDateTime (const cdrKey_t& key, time_t value);
 
 %extend CommonDataRepresentation::cdr {
 
@@ -147,6 +150,48 @@
     uint8_t getUInt8 (const cdrKey_t& key) const {
         uint8_t value = 0;
         bool ok = self->getInteger (key, value);
+        if (not ok)
+        {
+            std::ostringstream oss;
+            oss << "failed to find key: "
+                << key;
+            throw std::runtime_error (oss.str ());
+        }
+        
+        return value;
+    }
+
+    double getDouble (const cdrKey_t& key) const {
+        double value = 0;
+        bool ok = self->getDouble (key, value);
+        if (not ok)
+        {
+            std::ostringstream oss;
+            oss << "failed to find key: "
+                << key;
+            throw std::runtime_error (oss.str ());
+        }
+        
+        return value;
+    }
+
+    std::string getString (const cdrKey_t& key) const {
+        std::string value;
+        bool ok = self->getString (key, value);
+        if (not ok)
+        {
+            std::ostringstream oss;
+            oss << "failed to find key: "
+                << key;
+            throw std::runtime_error (oss.str ());
+        }
+        
+        return value;
+    }
+
+    CommonDataRepresentation::cdrDateTime getDateTime (const cdrKey_t& key) const {
+        CommonDataRepresentation::cdrDateTime value;
+        bool ok = self->getDateTime (key, value);
         if (not ok)
         {
             std::ostringstream oss;
