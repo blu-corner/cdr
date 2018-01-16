@@ -61,7 +61,7 @@
 // make cdr feel like a managed language
 %extend CommonDataRepresentation::cdr {
 
-    int64_t getInt64 (const cdrKey_t& key) const {
+    int64_t getInt64 (const cdrKey_t& key) throw (std::runtime_error) {
         int64_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -75,7 +75,7 @@
         return value;
     }
 
-    uint64_t getUInt64 (const cdrKey_t& key) const {
+    uint64_t getUInt64 (const cdrKey_t& key) throw (std::runtime_error) {
         uint64_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -89,7 +89,7 @@
         return value;
     }
 
-    int32_t getInt32 (const cdrKey_t& key) const {
+    int32_t getInt32 (const cdrKey_t& key) throw (std::runtime_error) {
         int32_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -103,7 +103,7 @@
         return value;
     }
     
-    uint32_t getUInt32 (const cdrKey_t& key) const {
+    uint32_t getUInt32 (const cdrKey_t& key) throw (std::runtime_error) {
         uint32_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -117,7 +117,7 @@
         return value;
     }
 
-    int16_t getInt16 (const cdrKey_t& key) const {
+    int16_t getInt16 (const cdrKey_t& key) throw (std::runtime_error) {
         int16_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -131,7 +131,7 @@
         return value;
     }
     
-    uint16_t getUInt16 (const cdrKey_t& key) const {
+    uint16_t getUInt16 (const cdrKey_t& key) throw (std::runtime_error) {
         uint16_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -145,7 +145,7 @@
         return value;
     }
 
-    int8_t getInt8 (const cdrKey_t& key) const {
+    int8_t getInt8 (const cdrKey_t& key) throw (std::runtime_error) {
         int8_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -159,7 +159,7 @@
         return value;
     }
     
-    uint8_t getUInt8 (const cdrKey_t& key) const {
+    uint8_t getUInt8 (const cdrKey_t& key) throw (std::runtime_error) {
         uint8_t value = 0;
         bool ok = self->getInteger (key, value);
         if (not ok)
@@ -173,7 +173,7 @@
         return value;
     }
 
-    double getDouble (const cdrKey_t& key) const {
+    double getDouble (const cdrKey_t& key) throw (std::runtime_error) {
         double value = 0;
         bool ok = self->getDouble (key, value);
         if (not ok)
@@ -187,7 +187,7 @@
         return value;
     }
 
-    std::string getString (const cdrKey_t& key) const {
+    std::string getString (const cdrKey_t& key) throw (std::runtime_error) {
         std::string value;
         bool ok = self->getString (key, value);
         if (not ok)
@@ -201,7 +201,7 @@
         return value;
     }
 
-    CommonDataRepresentation::cdrDateTime getDateTime (const cdrKey_t& key) const {
+    CommonDataRepresentation::cdrDateTime getDateTime (const cdrKey_t& key) throw (std::runtime_error) {
         CommonDataRepresentation::cdrDateTime value;
         bool ok = self->getDateTime (key, value);
         if (not ok)
