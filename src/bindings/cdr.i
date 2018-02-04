@@ -19,24 +19,22 @@
 %define __attribute__(x)
 %enddef
 
+// ignore reference api
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int64_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int64_t* value) const;
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint64_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint64_t* value) const;
-
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int32_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int32_t* value) const;
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint32_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint32_t* value) const;
-
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int16_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int16_t* value) const;
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint16_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint16_t* value) const;
-
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int8_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int8_t* value) const;
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint8_t& value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int64_t* value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint64_t* value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int32_t* value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint32_t* value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int16_t* value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint16_t* value) const;
+%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int8_t* value) const;
 %ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint8_t* value) const;
 
 // cant understand nested class const_iterator
@@ -47,19 +45,22 @@
 %ignore CommonDataRepresentation::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
 %ignore CommonDataRepresentation::cdr::setDateTime (const cdrKey_t& key, time_t value);
 
-// simple exception handler
-%exception {
-    try {
-        $action
-    } catch (std::exception &e) {
-        std::string s("cdr-error: "), s2(e.what());
-        s = s + s2;
-        SWIG_exception(SWIG_RuntimeError, s.c_str());
-    }
-}
-
 // make cdr feel like a managed language
 %extend CommonDataRepresentation::cdr {
+
+    int64_t getInteger (const cdrKey_t& key) throw (std::runtime_error) {
+        int64_t value = 0;
+        bool ok = self->getInteger (key, value);
+        if (not ok)
+        {
+            std::ostringstream oss;
+            oss << "failed to find key: "
+                << key;
+            throw std::runtime_error (oss.str ());
+        }
+        
+        return value;
+    }
 
     int64_t getInt64 (const cdrKey_t& key) throw (std::runtime_error) {
         int64_t value = 0;

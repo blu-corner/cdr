@@ -23,10 +23,12 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Cdr.dll
   )
 add_custom_target(CsharpDLL ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Cdr.dll)
 
+add_dependencies(CsharpDLL CdrCsharp)
+
 set(CSHARP_INSTALL_FILES
-  ${CMAKE_CURRENT_SOURCE_DIR}/run.sh
-  ${CMAKE_CURRENT_SOURCE_DIR}/build.sh
-  ${CMAKE_CURRENT_SOURCE_DIR}/example.cs
+  # ${CMAKE_CURRENT_SOURCE_DIR}/run.sh
+  # ${CMAKE_CURRENT_SOURCE_DIR}/build.sh
+  # ${CMAKE_CURRENT_SOURCE_DIR}/example.cs
   ${CMAKE_CURRENT_BINARY_DIR}/Cdr.dll
   ${CMAKE_CURRENT_BINARY_DIR}/libCdrCsharp.so)
 
