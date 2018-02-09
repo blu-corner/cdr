@@ -20,7 +20,7 @@
 
 #define PRINTFLIKE(a, b) __attribute__ ((format (printf, a, b)))
 
-namespace CommonDataRepresentation
+namespace Neueda
 {
 
 class cdr;

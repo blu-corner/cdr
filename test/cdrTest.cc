@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-#include "cdr/cdr.h"
+#include "cdr.h"
 
-using namespace CommonDataRepresentation;
+using namespace Neueda;
 
 TEST(CDR, GET_INTEGER)
 {

@@ -1,7 +1,7 @@
 %module(directors="1", thread="1") Cdr
 
 %{
-#include <cdr/cdr.h>
+#include <cdr.h>
 
 #include <stdexcept>
 #include <sstream>
@@ -217,4 +217,4 @@
     
 };
 
-%include "cdr/cdr.h"
+%include "cdr.h"
