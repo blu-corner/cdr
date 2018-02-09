@@ -31,7 +31,7 @@ add_jar(CdrJNI
   ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__vectorT_CommonDataRepresentation__cdr_t.java
   ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_void.java
   )
-add_dependencies(CdrJni Cdr)
+# add_dependencies(CdrJni Cdr)
 
 # Files to install with Java
 set(JAVA_INSTALL_FILES
