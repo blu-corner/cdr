@@ -2,6 +2,8 @@
 
 %feature("python:slot", "tp_str", functype="reprfunc") CommonDataRepresentation::cdr::toString;
 
+%include "exception.i"
+
 // simple exception handler
 %exception {
     try {

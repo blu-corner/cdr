@@ -10,6 +10,11 @@
      }
 %}
 
+SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
+SWIG_JAVABODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
+
+%include "exception.i"
+
 // simple exception handler
 %exception {
     try {
@@ -20,8 +25,5 @@
         SWIG_exception(SWIG_RuntimeError, s.c_str());
     }
 }
-
-SWIG_JAVABODY_PROXY(public, public, SWIGTYPE)
-SWIG_JAVABODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
 
 %include "cdr.i"
