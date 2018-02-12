@@ -34,15 +34,14 @@ endif (UNIX)
 # compile options
 add_compile_options(-Wall)
 if (DEBUG)
-  message("cdr DEBUG: ON")
+  message(STATUS "cdr DEBUG: ON")
   add_compile_options(-g3)
 else ()
-  message("cdr DEBUG: OFF")
+  message(STATUS "cdr DEBUG: OFF")
   add_compile_options(-g -O2)
 endif (DEBUG)
 
-# extra cmake code
-include(${PROJECT_SOURCE_DIR}/cmake/UseJava.cmake)
+# allow external projects
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 # add source
