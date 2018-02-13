@@ -1,6 +1,6 @@
 %feature("autodoc");
 
-%feature("python:slot", "tp_str", functype="reprfunc") Neueda::cdr::toString;
+%feature("python:slot", "tp_str", functype="reprfunc") neueda::cdr::toString;
 
 %include "exception.i"
 

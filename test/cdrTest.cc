@@ -3,7 +3,7 @@
 
 #include "cdr.h"
 
-using namespace Neueda;
+using namespace neueda;
 
 TEST(CDR, GET_INTEGER)
 {
