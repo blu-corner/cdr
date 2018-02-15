@@ -3,4 +3,7 @@
     return $null;
 }
 
+SWIG_CSBODY_PROXY(public, public, SWIGTYPE)
+SWIG_CSBODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
+
 %include "cdr.i"
