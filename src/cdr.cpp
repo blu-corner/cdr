@@ -1,6 +1,6 @@
 #include "cdr.h"
 
-namespace Neueda
+namespace neueda
 {
 
 bool

@@ -19,33 +19,33 @@
 %enddef
 
 // ignore reference api
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int64_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint64_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int32_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint32_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int16_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint16_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int8_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint8_t& value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int64_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint64_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int32_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint32_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int16_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint16_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, int8_t* value) const;
-%ignore Neueda::cdr::getInteger (const cdrKey_t& key, uint8_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int64_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint64_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int32_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint32_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int16_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint16_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int8_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint8_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int64_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint64_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int32_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint32_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int16_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint16_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int8_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint8_t* value) const;
 
 // cant understand nested class const_iterator
-%ignore Neueda::cdr::const_iterator;
-%ignore Neueda::cdr::begin;
-%ignore Neueda::cdr::end;
-%ignore Neueda::cdr::getDateTime (const cdrKey_t& key, time_t& value) const;
-%ignore Neueda::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
-%ignore Neueda::cdr::setDateTime (const cdrKey_t& key, time_t value);
+%ignore neueda::cdr::const_iterator;
+%ignore neueda::cdr::begin;
+%ignore neueda::cdr::end;
+%ignore neueda::cdr::getDateTime (const cdrKey_t& key, time_t& value) const;
+%ignore neueda::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
+%ignore neueda::cdr::setDateTime (const cdrKey_t& key, time_t value);
 
 // make cdr feel like a managed language
-%extend Neueda::cdr {
+%extend neueda::cdr {
 
     int64_t getInteger (const cdrKey_t& key) {
         int64_t value = 0;
@@ -201,8 +201,8 @@
         return value;
     }
 
-    Neueda::cdrDateTime getDateTime (const cdrKey_t& key) {
-        Neueda::cdrDateTime value;
+    neueda::cdrDateTime getDateTime (const cdrKey_t& key) {
+        neueda::cdrDateTime value;
         bool ok = self->getDateTime (key, value);
         if (not ok)
         {
