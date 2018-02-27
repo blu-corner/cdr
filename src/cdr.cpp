@@ -1,6 +1,6 @@
-#include "cdr/cdr.h"
+#include "cdr.h"
 
-namespace CommonDataRepresentation
+namespace neueda
 {
 
 bool

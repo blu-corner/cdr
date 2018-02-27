@@ -1,7 +1,7 @@
 %module(directors="1", thread="1") Cdr
 
 %{
-#include <cdr/cdr.h>
+#include <cdr.h>
 
 #include <stdexcept>
 #include <sstream>
@@ -19,33 +19,33 @@
 %enddef
 
 // ignore reference api
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int64_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint64_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int32_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint32_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int16_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint16_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int8_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint8_t& value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int64_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint64_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int32_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint32_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int16_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint16_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, int8_t* value) const;
-%ignore CommonDataRepresentation::cdr::getInteger (const cdrKey_t& key, uint8_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int64_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint64_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int32_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint32_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int16_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint16_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int8_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint8_t& value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int64_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint64_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int32_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint32_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int16_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint16_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, int8_t* value) const;
+%ignore neueda::cdr::getInteger (const cdrKey_t& key, uint8_t* value) const;
 
 // cant understand nested class const_iterator
-%ignore CommonDataRepresentation::cdr::const_iterator;
-%ignore CommonDataRepresentation::cdr::begin;
-%ignore CommonDataRepresentation::cdr::end;
-%ignore CommonDataRepresentation::cdr::getDateTime (const cdrKey_t& key, time_t& value) const;
-%ignore CommonDataRepresentation::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
-%ignore CommonDataRepresentation::cdr::setDateTime (const cdrKey_t& key, time_t value);
+%ignore neueda::cdr::const_iterator;
+%ignore neueda::cdr::begin;
+%ignore neueda::cdr::end;
+%ignore neueda::cdr::getDateTime (const cdrKey_t& key, time_t& value) const;
+%ignore neueda::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
+%ignore neueda::cdr::setDateTime (const cdrKey_t& key, time_t value);
 
 // make cdr feel like a managed language
-%extend CommonDataRepresentation::cdr {
+%extend neueda::cdr {
 
     int64_t getInteger (const cdrKey_t& key) {
         int64_t value = 0;
@@ -201,8 +201,8 @@
         return value;
     }
 
-    CommonDataRepresentation::cdrDateTime getDateTime (const cdrKey_t& key) {
-        CommonDataRepresentation::cdrDateTime value;
+    neueda::cdrDateTime getDateTime (const cdrKey_t& key) {
+        neueda::cdrDateTime value;
         bool ok = self->getDateTime (key, value);
         if (not ok)
         {
@@ -217,4 +217,4 @@
     
 };
 
-%include "cdr/cdr.h"
+%include "cdr.h"

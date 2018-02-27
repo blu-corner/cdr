@@ -45,7 +45,6 @@ endif (DEBUG)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 # add source
-add_subdirectory(include)
 add_subdirectory(src)
 
 set(${PROJECT_NAME}_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)

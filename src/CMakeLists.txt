@@ -1,5 +1,13 @@
+set(CDR_HEADERS
+  cdr.h
+  )
+
+install(FILES ${CDR_HEADERS}
+  DESTINATION include/cdr
+    )
+
 include_directories(
-  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/src
   ${PROJECT_BINARY_DIR}/src
   )
 
