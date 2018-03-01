@@ -5,7 +5,7 @@ endif()
 message(STATUS "Found mono compiler: ${MCS}")
 
 # set the flags for swig
-set(CMAKE_SWIG_FLAGS -namespace com.neueda.cdr -dllimport CdrCsharp)
+set(CMAKE_SWIG_FLAGS -namespace Neueda.Cdr -dllimport CdrCsharp)
 set_source_files_properties(../cdr.csharp.i PROPERTIES CPLUSPLUS ON)
 
 # Add swig module
