@@ -87,3 +87,5 @@ if(TESTS)
   add_subdirectory(test)
 endif()
 
+INCLUDE(CPack)
+SET(CPACK_GENERATOR "TGZ")
