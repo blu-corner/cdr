@@ -35,7 +35,7 @@ for (nodeName in nodeLabels)
                         rm -rf build
                         mkdir build
                         cd build
-                        cmake -DTESTS=ON -DSWIG=ON ../
+                        cmake -DTESTS=ON -DJAVA=ON -DPYTHON=ON -DCSHARP=ON ../
                         make VERBOSE=1 install
                         make package
                     """)
