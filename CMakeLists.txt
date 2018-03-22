@@ -10,7 +10,9 @@ endif()
 
 # options
 option(DEBUG "Enable debug build" OFF)
-option(SWIG "Enable swig bindings" OFF)
+option(JAVA "Enable Java bindings" OFF)
+option(PYTHON "Enable Python bindings" OFF)
+option(CSHARP "Enable C# bindings" OFF)
 
 # set version info
 set(CDR_MAJOR_VERSION 0)

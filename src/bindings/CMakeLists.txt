@@ -1,3 +1,16 @@
-add_subdirectory(python)
-add_subdirectory(java)
-add_subdirectory(csharp)
+if(PYTHON OR JAVA OR CSHARP)
+  find_package(SWIG REQUIRED)
+  include(${SWIG_USE_FILE})
+endif()
+
+if(PYTHON)
+  add_subdirectory(python)
+endif()
+
+if(JAVA)
+  add_subdirectory(java)
+endif()
+
+if(CSHARP)
+  add_subdirectory(csharp)
+endif()
