@@ -36,7 +36,7 @@ for (nodeName in nodeLabels)
                         mkdir build
                         cd build
                         cmake -DTESTS=ON -DJAVA=ON -DPYTHON=ON -DCSHARP=ON ../
-                        make VERBOSE=1 install
+                        make VERBOSE=1 install | tee compiler.log
                         make package
                     """)
                 }
@@ -95,7 +95,7 @@ for (nodeName in nodeLabels)
                 stage("sonar-upload")
                 {
                     withSonarQubeEnv('SonarQube Server') {
-                            sh "/opt/sonar-scanner-2.8/bin/sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.projectName=$packageName -Dsonar.projectVersion=$newFixVersion -Dsonar.projectKey=$projectPrefix-$nodeName-$packageName -Dsonar.sources=./src/"
+                            sh "/opt/sonar-scanner-2.8/bin/sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=build/compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.projectName=$packageName -Dsonar.projectVersion=$newFixVersion -Dsonar.projectKey=$projectPrefix-$nodeName-$packageName -Dsonar.sources=./src/"
                         }
                 }
 
