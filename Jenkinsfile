@@ -35,7 +35,7 @@ for (nodeName in nodeLabels)
                         rm -rf build
                         mkdir build
                         cd build
-                        cmake -DTESTS=ON -DJAVA=ON -DPYTHON=ON -DCSHARP=ON ../
+                        cmake -DTESTS=ON -DCOVERAGE=ON -DJAVA=ON -DPYTHON=ON -DCSHARP=ON ../
                         make VERBOSE=1 install | tee compiler.log
                         make package
                     """)
@@ -54,14 +54,14 @@ for (nodeName in nodeLabels)
                 {
                     warnings canComputeNew: false, canResolveRelativePaths: false, categoriesPattern: '', consoleParsers: [[parserName: 'GNU C Compiler 4 (gcc)']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''
                 }
-                /* stage("unittest [$nodeName]")
+                stage("unittest [$nodeName]")
                 {
                     sh("""
                        cd build
                        export LD_LIBRARY_PATH=`pwd`/install/lib
-                       ./install/bin/unittest --gtest_output=xml:../test.xml
+                       valgrind --xml=yes --xml-file=valgrind_report.xml -- ./install/bin/unittest --gtest_output=xml:../test.xml
                     """)
-                
+
                     step([$class: 'XUnitPublisher',
                          testTimeMargin: '3000',
                          thresholdMode: 1,
@@ -81,7 +81,10 @@ for (nodeName in nodeLabels)
                                  pattern: 'test.xml',
                                  skipNoTestFiles: false,
                                  stopProcessingIfError: true]]])
-                } */
+
+                    step([$class: 'ValgrindPublisher',
+                         pattern: 'build/valgrind_report.xml'])
+                }
 
                 stage("static-analysis")
                 {
@@ -92,10 +95,17 @@ for (nodeName in nodeLabels)
                           pattern: 'vera.xml'])
 
                 }
+                stage("coverage-analysis")
+                {
+                    sh "gcovr -r ./ -x > coverage_report.xml"
+
+                    step([$class: 'CoberturaPublisher',
+                         coberturaReportFile: 'coverage_report.xml'])
+                }
                 stage("sonar-upload")
                 {
                     withSonarQubeEnv('SonarQube Server') {
-                            sh "/opt/sonar-scanner-2.8/bin/sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=build/compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.projectName=$packageName -Dsonar.projectVersion=$newFixVersion -Dsonar.projectKey=$projectPrefix-$nodeName-$packageName -Dsonar.sources=./src/"
+                            sh "/opt/sonar-scanner-2.8/bin/sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=build/compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.projectName=$packageName -Dsonar.projectVersion=$newFixVersion -Dsonar.projectKey=$projectPrefix-$nodeName-$packageName -Dsonar.sources=./src/"
                         }
                 }
 
