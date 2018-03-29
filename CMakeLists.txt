@@ -8,12 +8,20 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE )
 endif()
 
+if(APPLE)
+  set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+  set(CMAKE_XCODE_ATTRIBUTE_GCC_VERSION "com.apple.compilers.llvm.clang.1_0")
+  set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-undefined,dynamic_lookup")
+  set(CMAKE_MACOSX_RPATH 1)
+endif()
+
 # options
 option(DEBUG "Enable debug build" OFF)
 option(JAVA "Enable Java bindings" OFF)
 option(PYTHON "Enable Python bindings" OFF)
 option(CSHARP "Enable C# bindings" OFF)
 option(COVERAGE "Enable gcov coverage" OFF)
+
 if(COVERAGE)
     set(COVERAGE_COMPILE_FLAGS "-g -O0 -coverage -fprofile-arcs -ftest-coverage")
     set(COVERAGE_LINK_FLAGS    "-coverage -lgcov")
