@@ -1,4 +1,4 @@
-%module(directors="1", thread="1") Cdr
+%module(directors="1", thread="1") CommonDataRepresentation
 
 %{
 #include <cdr.h>
@@ -11,8 +11,6 @@
 %include "std_string.i"
 %include "stdint.i"
 %include "std_vector.i"
-%include "cdata.i"
-%include "typemaps.i"
 
 // macros
 %define __attribute__(x)

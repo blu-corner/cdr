@@ -29,7 +29,6 @@ if(COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}" ) 
 endif(COVERAGE)
 
-
 # set version info
 set(CDR_MAJOR_VERSION 0)
 set(CDR_MINOR_VERSION 1)
@@ -39,7 +38,7 @@ set(CDR_VERSION ${CDR_MAJOR_VERSION}.${CDR_MINOR_VERSION}.${CDR_PATCH_VERSION})
 if (UNIX)
   macro (add_library _name)
     _add_library(${ARGV})
-    if (TARGET ${_name})
+    if (NOT APPLE AND TARGET ${_name})
       SET_TARGET_PROPERTIES(${_name}
         PROPERTIES
             VERSION ${CDR_VERSION}
