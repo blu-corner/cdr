@@ -62,12 +62,14 @@ struct cdrItem
     cdrItem () : mPair (NULL),
                  mType (CDR_STRING),
                  mDouble (0),
-                 mInteger (0)
+                 mInteger (0),
+                 mKey(0)
     {}
     cdrItem (cdrItemType type) : mPair (NULL),
                                  mType (type),
                                  mDouble (0),
-                                 mInteger (0)
+                                 mInteger (0),
+                                 mKey(0)
     {}
     cdrItem (const cdrItem& other) : mKey (other.mKey),
                                      mIndex (other.mIndex),
