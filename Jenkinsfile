@@ -88,7 +88,7 @@ for (nodeName in nodeLabels)
 
                 stage("static-analysis")
                 {
-                    sh "cppcheck -f --enable=all --xml ./src/ 2> ./cppcheck_report.xml"
+                    sh "cppcheck -f --enable=all --xml --suppress=missingIncludeSystem ./src/ 2> ./cppcheck_report.xml"
                     sh 'vera++ -c vera.xml `find ./src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`'
 
                     step([$class: 'CheckStylePublisher',
