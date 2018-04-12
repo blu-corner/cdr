@@ -6,6 +6,7 @@ def projectPrefix = "neueda-capopen"
 def newFixVersion = "0.0.1"
 
 def gitCreds = '51947d2c-c215-4578-8996-605330e83e39'
+def prefixLabel = 'capopen'
 def nodeLabels = ['centos6', 'centos7', 'ubuntu', 'fedora']
 def buildTest = [:]
 
@@ -14,7 +15,7 @@ for (nodeName in nodeLabels)
     stage ("Build-Test")
     {
         buildTest["build-test-$nodeName"] = {
-            node (nodeName)
+            node ("$prefixLabel-$nodeName")
             {
                 stage("checkout [$nodeName]") 
                 {
