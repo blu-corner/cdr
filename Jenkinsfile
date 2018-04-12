@@ -15,7 +15,7 @@ for (node in nodeLabels)
     stage ("Build-Test")
     {
         buildTest["build-test-$nodeName"] = {
-            node(nodeName)
+            node($nodeName)
             {
                 stage("checkout [$nodeName]")
                 {
