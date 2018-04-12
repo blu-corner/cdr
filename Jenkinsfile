@@ -9,14 +9,15 @@ def gitCreds = '51947d2c-c215-4578-8996-605330e83e39'
 def nodeLabels = ['centos6', 'centos7', 'ubuntu', 'fedora']
 def buildTest = [:]
 
-for (nodeName in nodeLabels)
+for (node in nodeLabels)
 {
+    def nodeName = node
     stage ("Build-Test")
     {
         buildTest["build-test-$nodeName"] = {
-            node ($nodeName)
+            node(nodeName)
             {
-                stage("checkout [$nodeName]") 
+                stage("checkout [$nodeName]")
                 {
                     checkout([$class: 'GitSCM', branches: [[name: "*/$gitBranch"]],
                              doGenerateSubmoduleConfigurations: false,
