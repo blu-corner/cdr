@@ -9,13 +9,14 @@ def gitCreds = '51947d2c-c215-4578-8996-605330e83e39'
 def nodeLabels = ['centos6', 'centos7', 'ubuntu', 'fedora']
 def buildTest = [:]
 
-for (node in nodeLabels)
+for (int i = 0; i < nodeLabels.size(); i++)
 {
-    def nodeName = node
+    int index = i
+    def nodeName = nodeLabels[index]
     stage ("Build-Test")
     {
         buildTest["build-test-$nodeName"] = {
-            node($nodeName)
+            node(nodeName)
             {
                 stage("checkout [$nodeName]")
                 {
@@ -90,7 +91,7 @@ for (node in nodeLabels)
                 stage("static-analysis")
                 {
                     sh "cppcheck -f --enable=all --xml --suppress=missingIncludeSystem ./src/ 2> ./cppcheck_report.xml"
-                    sh 'vera++ -p /vera-profile -c vera.xml `find ./src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`'
+                    sh 'vera++ -p vera-profile -c vera.xml `find ./src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`'
 
                     step([$class: 'CheckStylePublisher',
                           pattern: 'vera.xml'])
