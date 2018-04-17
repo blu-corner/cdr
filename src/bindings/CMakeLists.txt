@@ -1,3 +1,8 @@
+#
+#   Copyright 2014-2018 Neueda Ltd.
+#
+#   Generated 17/04/18
+#
 if(PYTHON OR JAVA OR CSHARP)
   find_package(SWIG REQUIRED)
   include(${SWIG_USE_FILE})

@@ -1,3 +1,8 @@
+#
+#   Copyright 2014-2018 Neueda Ltd.
+#
+#   Generated 17/04/18
+#
 # Include python
 find_package(PythonInterp REQUIRED)
 set(Python_ADDITIONAL_VERSIONS 2.7)

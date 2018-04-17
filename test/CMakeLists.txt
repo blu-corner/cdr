@@ -1,3 +1,8 @@
+#
+#   Copyright 2014-2018 Neueda Ltd.
+#
+#   Generated 17/04/18
+#
 include_directories(
   ${PROJECT_SOURCE_DIR}/src
   ${PROJECT_SOURCE_DIR}/test

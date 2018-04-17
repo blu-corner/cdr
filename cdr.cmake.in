@@ -1,3 +1,8 @@
+#
+#   Copyright 2014-2018 Neueda Ltd.
+#
+#   Generated 17/04/18
+#
 get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 include(${SELF_DIR}/@PROJECT_NAME@.cmake)
 set(@PROJECT_NAME@_INCLUDE_DIR @cdr_INCLUDE_DIR@)

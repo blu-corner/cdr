@@ -1,3 +1,8 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ *
+ * Generated 17/04/18
+ */
 import com.neueda.cdr.*;
 
 public class example
