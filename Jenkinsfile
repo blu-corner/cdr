@@ -106,9 +106,11 @@ for (int i = 0; i < nodeLabels.size(); i++)
                 }
                 stage("sonar-upload")
                 {
-                    withSonarQubeEnv('SonarQube Server') {
-                            sh "/opt/sonar-scanner-2.8/bin/sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=build/compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.cxx.compiler.regex='^(.*):([0-9]+):[0-9]+: warning: (.*)\\[(.*)\\]\$' -Dsonar.projectName=$packageName -Dsonar.projectVersion=$newFixVersion -Dsonar.projectKey=$projectPrefix-$nodeName-$packageName -Dsonar.sources=./src/"
-                        }
+                    if(nodeName == 'ubuntu') {
+                        withSonarQubeEnv('SonarQube Server') {
+                                sh "/opt/sonar-scanner-2.8/bin/sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=build/compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.cxx.compiler.regex='^(.*):([0-9]+):[0-9]+: warning: (.*)\\[(.*)\\]\$' -Dsonar.projectName=$packageName -Dsonar.projectVersion=$newFixVersion -Dsonar.projectKey=$projectPrefix-$nodeName-$packageName -Dsonar.sources=./src/"
+                            }
+                    }
                 }
 
             }
