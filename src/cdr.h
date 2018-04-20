@@ -109,6 +109,7 @@ public:
     cdr ();
     cdr (const cdr& obj);
     cdr& operator= (const cdr& obj);
+    virtual ~cdr() {};
 
     void clear ();
     size_t size () const;
