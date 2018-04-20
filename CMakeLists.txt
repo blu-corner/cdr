@@ -1,7 +1,5 @@
 #
-#   Copyright 2014-2018 Neueda Ltd.
-#
-#   Generated 17/04/18
+# Copyright 2014-2018 Neueda Ltd.
 #
 cmake_minimum_required(VERSION 2.8.0)
 project(cdr CXX)

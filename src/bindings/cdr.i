@@ -1,7 +1,5 @@
 /*
  * Copyright 2014-2018 Neueda Ltd.
- *
- * Generated 17/04/18
  */
 %module(directors="1", thread="1") CommonDataRepresentation
 

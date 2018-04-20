@@ -1,7 +1,5 @@
 /*
  * Copyright 2014-2018 Neueda Ltd.
- *
- * Generated 17/04/18
  */
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

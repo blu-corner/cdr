@@ -1,7 +1,5 @@
 /*
  * Copyright 2014-2018 Neueda Ltd.
- *
- * Generated 17/04/18
  */
 %typemap(throws, canthrow=1) std::runtime_error {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpApplicationException, $1.what(), NULL);
