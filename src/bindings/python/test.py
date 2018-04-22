@@ -1,4 +1,4 @@
-from CommonDataRepresentation import cdr
+from Cdr import cdr
 import unittest
 
 
