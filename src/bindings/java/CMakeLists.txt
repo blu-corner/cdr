@@ -32,11 +32,21 @@ set(JNI_SOURCES
   )
 set_source_files_properties(${JNI_SOURCES}
   PROPERTIES GENERATED TRUE)
+
+add_custom_command(OUTPUT ${JNI_SOURCES}
+  # COMMAND echo "ensure"
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS Cdr
+  COMMENT "Generating JNI SOURCES"
+  VERBATIM
+  )
+add_custom_target(GEN_JNI_SOURCES ALL DEPENDS ${JNI_SOURCES})
+add_dependencies(GEN_JNI_SOURCES Cdr)
+
 add_jar(CdrJNI
-  SOURCES
   ${JNI_SOURCES}
   )
-add_dependencies(CdrJNI Cdr)
+add_dependencies(CdrJNI Cdr GEN_JNI_SOURCES)
 
 # Files to install with Java
 if(APPLE)
