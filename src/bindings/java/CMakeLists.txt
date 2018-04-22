@@ -30,23 +30,16 @@ set(JNI_SOURCES
   ${CMAKE_CURRENT_BINARY_DIR}/cdrItem.java
   ${CMAKE_CURRENT_BINARY_DIR}/cdrItemType.java
   )
-set_source_files_properties(${JNI_SOURCES}
-  PROPERTIES GENERATED TRUE)
-
-add_custom_command(OUTPUT ${JNI_SOURCES}
-  # COMMAND echo "ensure"
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-  DEPENDS Cdr
-  COMMENT "Generating JNI SOURCES"
-  VERBATIM
-  )
-add_custom_target(GEN_JNI_SOURCES ALL DEPENDS ${JNI_SOURCES})
-add_dependencies(GEN_JNI_SOURCES Cdr)
 
 add_jar(CdrJNI
   ${JNI_SOURCES}
   )
-add_dependencies(CdrJNI Cdr GEN_JNI_SOURCES)
+
+if(TARGET _Cdr)
+  add_dependencies(CdrJNI _Cdr)
+else()
+  add_dependencies(CdrJNI Cdr)
+endif()
 
 # Files to install with Java
 if(APPLE)
@@ -55,13 +48,26 @@ else()
   set(JAVA_DYLIB_SUFFIX ".so")
 endif()
 
+# cmake 2.8 swig has issues on figuring out naming libs
+if(TARGET _Cdr)
+  set_target_properties(_Cdr PROPERTIES OUTPUT_NAME "Cdr")
+  set_target_properties(_Cdr PROPERTIES SUFFIX ${JAVA_DYLIB_SUFFIX})
+endif()
+
 set(JAVA_INSTALL_FILES
   # ${CMAKE_CURRENT_SOURCE_DIR}/run.sh
   # ${CMAKE_CURRENT_SOURCE_DIR}/build.sh
   # ${CMAKE_CURRENT_SOURCE_DIR}/example.java
-  ${CMAKE_CURRENT_BINARY_DIR}/CdrJNI.jar
-  ${CMAKE_CURRENT_BINARY_DIR}/libCdr${JAVA_DYLIB_SUFFIX})
+  ${CMAKE_CURRENT_BINARY_DIR}/CdrJNI.jar)
 
 # Declare install target for java
 install(FILES ${JAVA_INSTALL_FILES}
   DESTINATION lib/java)
+
+if(TARGET _Cdr)
+  install(TARGETS _Cdr
+	DESTINATION lib/java)
+else()
+  install(TARGETS Cdr
+	DESTINATION lib/java)
+endif()
