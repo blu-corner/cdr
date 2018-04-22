@@ -1,4 +1,4 @@
-%module(directors="1", thread="1") Cdr
+%module(directors="1", thread="1") CommonDataRepresentation
 
 %{
 #include <cdr.h>

@@ -11,12 +11,11 @@ set_source_files_properties(../cdr.py.i PROPERTIES CPLUSPLUS ON)
 # Add swig module
 swig_add_module(CommonDataRepresentation python ../cdr.py.i)
 swig_link_libraries(CommonDataRepresentation cdr ${PYTHON_LIBRARIES})
-set_target_properties(_CommonDataRepresentation PROPERTIES OUTPUT_NAME "Cdr")
 
 # Files to install with Python
 set(PYTHON_INSTALL_FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/Cdr.py
-  ${CMAKE_CURRENT_BINARY_DIR}/_Cdr.so)
+  ${CMAKE_CURRENT_BINARY_DIR}/CommonDataRepresentation.py
+  ${CMAKE_CURRENT_BINARY_DIR}/_CommonDataRepresentation.so)
 
 # Declare install target for python
 install(FILES ${PYTHON_INSTALL_FILES}
