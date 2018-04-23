@@ -24,7 +24,7 @@ $ sudo apt-get install valgrind
 ```
 
 Valgrind docs can be found here: http://valgrind.org/docs/
-Once installed use the following commands to create
+Once installed use the following commands to create report.
 
 ```bash
 $ cd build
