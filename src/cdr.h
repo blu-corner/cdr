@@ -59,17 +59,17 @@ enum cdrItemType
 
 struct cdrItem
 {
-    cdrItem () : mPair (NULL),
+    cdrItem () : mKey(0),
+                 mPair (NULL),
                  mType (CDR_STRING),
                  mDouble (0),
-                 mInteger (0),
-                 mKey(0)
+                 mInteger (0)
     {}
-    cdrItem (cdrItemType type) : mPair (NULL),
+    cdrItem (cdrItemType type) : mKey(0),
+                                 mPair (NULL),
                                  mType (type),
                                  mDouble (0),
-                                 mInteger (0),
-                                 mKey(0)
+                                 mInteger (0)
     {}
     cdrItem (const cdrItem& other) : mKey (other.mKey),
                                      mIndex (other.mIndex),
