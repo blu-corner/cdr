@@ -6,7 +6,7 @@ Data structure used within Neueda Front-office-SDK as a common message format fo
 Uses Cmake
 
 ```bash
-$ git submodule update --init --recurisve
+$ git submodule update --init --recursive
 $ mkdir build
 $ cd build
 $ cmake -DTESTS=ON -DCOVERAGE=ON ../
