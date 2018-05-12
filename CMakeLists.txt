@@ -64,23 +64,7 @@ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 # add source
 add_subdirectory(src)
 
-set(${PROJECT_NAME}_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
-set(${PROJECT_NAME}_LIBRARIES cdr)
-configure_file(
-  ${PROJECT_NAME}.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.cmake
-  @ONLY
-  )
-install(EXPORT cdr DESTINATION lib/cmake/cdr)
-install(
-  FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.cmake
-  DESTINATION lib/cmake/cdr COMPONENT dev
-  RENAME ${PROJECT_NAME}Config.cmake
-  PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
-)
-
 # unit-tests
-
 option(TESTS "Enable unit-tests" OFF)
 if(TESTS)
   ExternalProject_Add(
