@@ -1,3 +1,6 @@
+#
+# Copyright 2014-2018 Neueda Ltd.
+#
 find_program(MCS mcs)
 if(NOT MCS)
   message(FATAL_ERROR "Failed to find mono compiler")

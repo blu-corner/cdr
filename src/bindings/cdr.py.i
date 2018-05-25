@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 %feature("autodoc");
 
 %feature("python:slot", "tp_str", functype="reprfunc") neueda::cdr::toString;

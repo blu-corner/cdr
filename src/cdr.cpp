@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 #include "cdr.h"
 
 namespace neueda

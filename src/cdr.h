@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 #ifndef _CDR_H_
 #define _CDR_H_
 

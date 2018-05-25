@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 // -*-groovy-*-
 def gitUrl = "https://gitlab.com/neueda-capopen/cdr.git"
 def gitBranch = "master"

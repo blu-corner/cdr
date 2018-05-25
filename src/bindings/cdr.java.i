@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 %pragma(java) jniclasscode=%{
      // jniclasscode pragma code: Static block so that the JNI class loads the C++ DLL/shared object when the class is loaded
      static {

@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 

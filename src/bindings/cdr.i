@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014-2018 Neueda Ltd.
+ */
 %module(directors="1", thread="1") CommonDataRepresentation
 
 %{

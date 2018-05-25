@@ -1,3 +1,6 @@
+#
+# Copyright 2014-2018 Neueda Ltd.
+#
 # Include Java
 find_package(Java REQUIRED COMPONENTS Runtime Development)
 find_package(JNI REQUIRED)
