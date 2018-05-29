@@ -265,8 +265,6 @@ cdr::getInteger (const cdrKey_t& key, uint64_t& value) const
     int64_t tmp;
     if (!getInteger (key, tmp))
         return false;
-    if (tmp < 0)
-        return false;
     value = tmp;
     return true;
 }

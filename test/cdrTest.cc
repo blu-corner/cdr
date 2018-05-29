@@ -426,7 +426,7 @@ TEST (CDR, GET_INTEGER_64_TYPE_FAILURE)
     d.setInteger (1, -100);
 
     uint64_t v1;
-    ASSERT_FALSE (d.getInteger (1, v1));
+    ASSERT_TRUE (d.getInteger (1, v1));
 }
 
 TEST (CDR, GET_INTEGER_64_KEY_FAILURE)
