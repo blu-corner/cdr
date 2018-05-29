@@ -326,7 +326,7 @@ cdr::getInteger (const cdrKey_t& key, int8_t& value) const
     int64_t tmp;
     if (!getInteger (key, tmp))
         return false;
-    if (tmp < 0 || tmp > INT8_MAX)
+    if (tmp < INT8_MIN || tmp > INT8_MAX)
         return false;
     value = tmp;
     return true;
