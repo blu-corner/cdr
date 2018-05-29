@@ -414,13 +414,22 @@ TEST (CDR, GET_INTEGER_64_SUCCESS)
     ASSERT_TRUE (d.getInteger (1, v1));
 }
 
+TEST (CDR, GET_INTEGER_U64_TYPE_SUCCESS)
+{
+    cdr d;
+    d.setInteger (1, UINT64_MAX);
+
+    uint64_t v1;
+    ASSERT_TRUE (d.getInteger (1, v1));
+}
+
 TEST (CDR, GET_INTEGER_64_TYPE_FAILURE)
 {
     cdr d;
     d.setInteger (1, -100);
 
     uint64_t v1;
-    ASSERT_FALSE (d.getInteger (1, v1));
+    ASSERT_TRUE (d.getInteger (1, v1));
 }
 
 TEST (CDR, GET_INTEGER_64_KEY_FAILURE)
@@ -451,6 +460,18 @@ TEST (CDR, GET_INTEGER_U64)
     uint64_t v6;
     d.getInteger (1, v6);
     ASSERT_EQ (v6, (u_int)100);
+
+    //TODO split into seperate cases for specific byte sizes
+}
+
+TEST (CDR, GET_INTEGER_U64_MAX)
+{
+    cdr d;
+    d.setInteger (1, UINT64_MAX);
+
+    uint64_t v = 0;
+    d.getInteger (1, v);
+    ASSERT_EQ (v, UINT64_MAX);
 
     //TODO split into seperate cases for specific byte sizes
 }
