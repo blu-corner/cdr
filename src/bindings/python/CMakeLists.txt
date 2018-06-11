@@ -23,8 +23,3 @@ set(PYTHON_INSTALL_FILES
 # Declare install target for python
 install(FILES ${PYTHON_INSTALL_FILES}
   DESTINATION lib/python)
-
-if(TESTS)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/test.py
-    DESTINATION bin)
-endif()

@@ -1,89 +1,74 @@
-# Common Data Representation
-Data structure used within Neueda Front-office-SDK as a common message format for all protocols.
+# cdr (Common Data Representation)
 
-## Compilation
+cdr is a data structure for storage of heterogenous values:
 
-Uses Cmake
+* String
+* Double
+* Integer
+* Datetime
+* Array of CDRs (nested CDRs)
+
+It is used within the Front-OfficeSDK as a common object format for all protocols.
+
+## Getting Started
+
+To compile the installation:
 
 ```bash
 $ git submodule update --init --recursive
 $ mkdir build
 $ cd build
-$ cmake -DTESTS=ON -DCOVERAGE=ON ../
-$ make VERBOSE=1 install |& tee compiler.log
-$ make package
+$ cmake -DTESTS=ON ../
+$ make
+$ make install
 ```
 
-## Profiling
+Language bindings can be enabled by passing -DJAVA=on, -DPYTHON=on
+to CMake. It is possible to build all bindings in the same build.
 
-Requires Valgrind. To install using Ubunutu: 
+### Dependencies
 
-```bash
-$ sudo apt-get update
-$ sudo apt-get install valgrind
+The only external dependency is SWIG, and is only required when building the
+Java, C# or Python bindings. For information on installing SWIG please visit the
+[SWIG website](http://www.swig.org). All other dependencies are managed through 
+git submodules.
+
+### Example Usage
+
+The following code displays example usage of the CDR.
+
+```cpp
+#include "cdr.h"
+#include <stdint.h>
+#include <iostream>
+
+using namespace std;
+using namespace neueda;
+
+int main ()
+{
+    cdr d;
+    d.setIntger ("integer", 100);
+    d.setString ("string", "hello");
+
+    string val;
+    if (d.getString ("string", val))
+        cout << "string: " << val << endl;
+
+    int intVal;
+    if (d.getInteger ("integer", intVal))
+        cout << "integer: " << intVal << endl;
+
+    cout << d.toString () << endl;
+}
 ```
 
-Valgrind docs can be found here: http://valgrind.org/docs/
-Once installed use the following commands to create report.
+Examples have been provided in each language within the [examples folder](./examples/).
+
+## Running the Tests
+
+To run the unit tests:
 
 ```bash
-$ cd build
-$ export LD_LIBRARY_PATH=`pwd`/install/lib
-$ valgrind --xml=yes --xml-file=valgrind_report.xml -- ./install/bin/unittest --gtest_output=xml:../test.xml
-```
-
-## Static Analysis
-
-Requires Vera++ and cppcheck. To install using Ubunutu: 
-
-```bash
-$ sudo apt-get update
-$ sudo apt-get install vera++
-$ sudo apt-get install cppcheck
-```
-
-Once installed use the following commands to retrieve detailed reports highlighting likely bugs, code smells and code coverage.
-If you have your own vera profile rememeber to add "-p profile-name" to the command. 
-
-```bash
-$ cppcheck -f --enable=all --xml --suppress=missingIncludeSystem ./src/ 2> ./cppcheck_report.xml
-$ vera++ -c vera.xml `find ./src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`
-$ gcovr -r ./ -x > coverage_report.xml
-```
-
-## Build with Bindings for Java, C# and Python
-
-Requires swig, python-dev, java, mono-mcs:
-
-```bash
-$ cmake -DTESTS=ON -DSWIG=ON -DCOVERAGE=ON -DPYTHON=ON -DJAVA=ON -DCSHARP=ON ../
-$ make VERBOSE=1 install |& tee compiler.log
-```
-
-### Test Python Bindings
-
-Run example:
-
-```bash
-$ cd build/install/lib/python
-$ LD_LIBRARY_PATH=../:$LD_LIBRARY_PATH
-$ python example.py
-```
-
-### Test Java Bindings:
-
-Run example:
-
-```bash
-$ cd build/install/lib/java
-$ sh build.sh
-$ sh run.sh
-```
-
-### Test C# bindings:
-
-```bash
-$ cd install/lib/csharp
-$ sh build.sh
-$ sh run.sh
+$ make test
 ```
