@@ -48,18 +48,18 @@ using namespace neueda;
 int main ()
 {
     cdr d;
-    d.setIntger ("integer", 100);
-    d.setString ("string", "hello");
-
-    string val;
-    if (d.getString ("string", val))
-        cout << "string: " << val << endl;
+    d.setInteger (1, 100);
+    d.setString (2, "hello");
 
     int intVal;
-    if (d.getInteger ("integer", intVal))
+    if (d.getInteger (1, intVal))
         cout << "integer: " << intVal << endl;
 
-    cout << d.toString () << endl;
+    string val;
+    if (d.getString (2, val))
+        cout << "string: " << val << endl;
+
+    cout << "cdr: " << d.toString () << endl;
 }
 ```
 
