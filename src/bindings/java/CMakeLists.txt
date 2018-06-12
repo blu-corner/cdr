@@ -26,9 +26,9 @@ set(JNI_SOURCES
   ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__pairT_long_long_const_neueda__cdrItem_t.java
   ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__string.java
   ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__vectorT_neueda__cdrItem_const_p_t.java
-  ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_std__vectorT_neueda__cdr_t.java
   ${CMAKE_CURRENT_BINARY_DIR}/SWIGTYPE_p_u_int.java
   ${CMAKE_CURRENT_BINARY_DIR}/Cdr.java
+  ${CMAKE_CURRENT_BINARY_DIR}/cdrArray.java
   ${CMAKE_CURRENT_BINARY_DIR}/cdrDateTime.java
   ${CMAKE_CURRENT_BINARY_DIR}/cdrItem.java
   ${CMAKE_CURRENT_BINARY_DIR}/cdrItemType.java

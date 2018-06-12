@@ -47,6 +47,8 @@
 %ignore neueda::cdr::getDateTime (const cdrKey_t& key, tm& value) const;
 %ignore neueda::cdr::setDateTime (const cdrKey_t& key, time_t value);
 
+%template(cdrArray) std::vector<neueda::cdr>;
+
 // make cdr feel like a managed language
 %extend neueda::cdr {
 
@@ -56,7 +58,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -70,7 +72,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -84,7 +86,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -98,7 +100,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -112,7 +114,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -126,7 +128,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -140,7 +142,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -154,7 +156,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -168,7 +170,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -182,7 +184,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -196,7 +198,7 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
@@ -210,14 +212,27 @@
         if (not ok)
         {
             std::ostringstream oss;
-            oss << "failed to find key: "
+            oss << "failed to retrieve value for key: "
                 << key;
             throw std::runtime_error (oss.str ());
         }
         
         return value;
     }
-    
+
+    neueda::cdrArray* getArray (const cdrKey_t& key) {
+        neueda::cdrArray* value = NULL;
+        bool ok = self->getArray (key, (const neueda::cdrArray**) &value);
+        if (not ok)
+        {
+            std::ostringstream oss;
+            oss << "failed to retrieve cdrArray for key: "
+                << key;
+            throw std::runtime_error (oss.str ());
+        }
+        
+        return value;
+    }
 };
 
 %include "cdr.h"
