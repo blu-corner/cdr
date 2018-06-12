@@ -1,7 +1,7 @@
 #
 # Copyright 2014-2018 Neueda Ltd.
 #
-from CommonDataRepresentation import cdr
+from cdr import Cdr
 import unittest
 
 
@@ -13,7 +13,7 @@ field3 = 55
 class TestCdr(unittest.TestCase):
 
     def get_a_cdr(self):
-        d = cdr()
+        d = Cdr()
         d.setInteger(field1, 123)
         d.setString(field2, "Hello")
         d.setString(field3, "World")
@@ -35,12 +35,12 @@ class TestCdr(unittest.TestCase):
             d.getInteger(4)
 
     def test_to_string(self):
-        d = cdr()
+        d = Cdr()
         d.setInteger(field1, 123)
         self.assertEqual(d.toString(), "1=123")
 
     def test_str(self):
-        d = cdr()
+        d = Cdr()
         d.setInteger(field1, 123)
 
 

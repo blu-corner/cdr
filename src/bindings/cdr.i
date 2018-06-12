@@ -1,7 +1,7 @@
 /*
  * Copyright 2014-2018 Neueda Ltd.
  */
-%module(directors="1", thread="1") CommonDataRepresentation
+%module(directors="1", thread="1") cdr
 
 %{
 #include <cdr.h>
@@ -18,6 +18,8 @@
 // macros
 %define __attribute__(x)
 %enddef
+
+%rename(Cdr) neueda::cdr;
 
 // ignore reference api
 %ignore neueda::cdr::getInteger (const cdrKey_t& key, int64_t& value) const;
