@@ -43,6 +43,17 @@ class TestCdr(unittest.TestCase):
         d = Cdr()
         d.setInteger(field1, 123)
 
+    def test_nested(self):
+        d = Cdr()
+        e = Cdr()
+        e.setString(1, "hello")
+        e.setString(2, "world")
+        d.appendArray(1, e)
+
+        f = d.getArray(1)
+        self.assertEqual(e.getString(1), f[0].getString(1))
+        self.assertEqual(e.getString(2), f[0].getString(2))
+
 
 if __name__ == '__main__':
     unittest.main()
