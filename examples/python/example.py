@@ -21,7 +21,7 @@ print("get integer as string: {0} ({1})".format(val, type(val)))
 val = d.getString(2)
 print("get string: {0}".format(val))
 
-# try to retrieve an integer value from a key that cannot be converted to
+# try to retrieve an integer from a key with value that cannot be converted to
 # integer
 try:
     val = d.getInteger(2)
