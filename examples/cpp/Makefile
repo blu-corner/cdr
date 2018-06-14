@@ -1,4 +1,4 @@
-INSTALL_PREFIX=../../build/install
+INSTALL_PREFIX=../../
 CXX=g++
 
 CFLAGS=-I$(INSTALL_PREFIX)/include/cdr/

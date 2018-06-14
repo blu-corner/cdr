@@ -85,3 +85,16 @@ endif()
 
 INCLUDE(CPack)
 SET(CPACK_GENERATOR "TGZ")
+
+INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/cpp/ DESTINATION
+        ${CMAKE_INSTALL_PREFIX}/examples/cpp/)
+
+if(JAVA)
+    INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/java/ DESTINATION
+            ${CMAKE_INSTALL_PREFIX}/examples/java/)
+endif()
+
+if(PYTHON)
+    INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/python/ DESTINATION
+            ${CMAKE_INSTALL_PREFIX}/examples/python/)
+endif()
