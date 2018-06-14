@@ -65,7 +65,7 @@ int main ()
 
 Examples have been provided in each language within the [examples folder](./examples/).
 
-* [CPP](examples/cpp/README.md)
+* [C++](examples/cpp/README.md)
 * [Java](examples/java/README.md)
 * [Python](examples/python/README.md)
 
