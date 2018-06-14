@@ -1,0 +1,59 @@
+#
+# Copyright 2014-2018 Neueda Ltd.
+#
+from cdr import Cdr
+import unittest
+
+
+field1 = 1
+field2 = 2
+field3 = 55
+
+
+class TestCdr(unittest.TestCase):
+
+    def get_a_cdr(self):
+        d = Cdr()
+        d.setInteger(field1, 123)
+        d.setString(field2, "Hello")
+        d.setString(field3, "World")
+
+        return d
+
+    def test_set_integer(self):
+        d = self.get_a_cdr()
+        self.assertEqual(d.getInt32(field1), 123)
+
+    def test_set_string(self):
+        d = self.get_a_cdr()
+        d.setString(field2, "Hello")
+        self.assertEqual(d.getString(field2), "Hello")
+
+    def test_get_exception(self):
+        d = self.get_a_cdr()
+        with self.assertRaises(RuntimeError):
+            d.getInteger(4)
+
+    def test_to_string(self):
+        d = Cdr()
+        d.setInteger(field1, 123)
+        self.assertEqual(d.toString(), "1=123")
+
+    def test_str(self):
+        d = Cdr()
+        d.setInteger(field1, 123)
+
+    def test_nested(self):
+        d = Cdr()
+        e = Cdr()
+        e.setString(1, "hello")
+        e.setString(2, "world")
+        d.appendArray(1, e)
+
+        f = d.getArray(1)
+        self.assertEqual(e.getString(1), f[0].getString(1))
+        self.assertEqual(e.getString(2), f[0].getString(2))
+
+
+if __name__ == '__main__':
+    unittest.main()
