@@ -16,4 +16,4 @@ $ ./example
 If the app is being compiled from outside of the install directory change the 
 INSTALL_PREFIX value within the Makefile to point at the install location.
 
-View the source (here)[example.cpp]
+View the source [here](example.cpp)
