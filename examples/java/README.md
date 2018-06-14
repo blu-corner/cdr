@@ -14,4 +14,4 @@ execute the jar:
 $ java -cp $INSTALL_PREFIX/lib/java/CdrJNI.jar:`pwd`/target/example-1.0-SNAPSHOT.jar com.neueda.cdrexample.App
 ```
 
-View the source (here)[src/main/java/com/neueda/cdrexample/App.java].
+View the source [here](src/main/java/com/neueda/cdrexample/App.java).
