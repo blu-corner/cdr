@@ -1,13 +1,6 @@
 /*
  * Copyright 2014-2018 Neueda Ltd.
  *
- * C++ Example displaying numerous features within the CDR. To build the example
- * run 'make' and execute with './example'. 
- *
- * If the install directory is not at
- * the standard location change the INSTALL_PREFIX value within the Makefile to
- * point at the install location.
- *
  */
 #include "cdr.h"
 #include <stdint.h>
