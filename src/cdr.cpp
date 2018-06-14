@@ -7,7 +7,7 @@ namespace neueda
 {
 
 bool
-cdrItem::asString (std::string& value) const
+cdrItem::asString (string& value) const
 {
     char tmp[256];
     switch (mType)
@@ -81,7 +81,7 @@ cdr::operator= (const cdr& obj)
 void
 cdr::findInChildren (const orderedItemMap* items,
                      const cdrKey_t& key,
-                     std::vector<const cdrItem*>& found) const
+                     vector<const cdrItem*>& found) const
 {
     orderedItemMap::const_iterator it0 = items->begin ();
     for (; it0 != items->end (); ++it0)
@@ -91,7 +91,7 @@ cdr::findInChildren (const orderedItemMap* items,
         const cdrItem* item = it0->second;
         if (it0->second->mType == CDR_ARRAY)
         {
-            std::vector<cdr>::const_iterator it = item->mArray.begin ();
+            vector<cdr>::const_iterator it = item->mArray.begin ();
             for (; it != it0->second->mArray.end (); ++it)
                 findInChildren (&it->mOrdered, key, found);
         }
@@ -146,7 +146,7 @@ cdr::setItem (const cdrKey_t& key, cdrItem& item)
 const cdrItem*
 cdr::getItem (const cdrKey_t& key) const
 {
-    std::map<int64_t, cdrItem>::const_iterator it = mItems.find (key);
+    map<int64_t, cdrItem>::const_iterator it = mItems.find (key);
     if (it == mItems.end ())
         return NULL;
     return &it->second;
@@ -163,7 +163,7 @@ cdr::deleteItem (const cdrKey_t& key)
 }
 
 void
-cdr::setString (const cdrKey_t& key, const std::string& value)
+cdr::setString (const cdrKey_t& key, const string& value)
 {
     cdrItem item (CDR_STRING);
     item.mString.assign (value);
@@ -189,7 +189,7 @@ cdr::setString (const cdrKey_t& key, const char* fmt, ...)
 }
 
 bool
-cdr::getString (const cdrKey_t& key, std::string& value) const
+cdr::getString (const cdrKey_t& key, string& value) const
 {
     const cdrItem* item = getItem (key);
     if (item == NULL)
@@ -533,10 +533,10 @@ cdr::setArray (const cdrKey_t& key, cdrArray value)
     item->mArray = value;
 }
 
-std::vector<const cdrItem*>
+vector<const cdrItem*>
 cdr::findAll (const cdrKey_t& key) const
 {
-    std::vector<const cdrItem*> found;
+    vector<const cdrItem*> found;
     findInChildren (&mOrdered, key, found);
     return found;
 }
@@ -551,17 +551,17 @@ cdr::update (cdr& d)
     }
 }
 
-std::string
+string
 cdr::toString () const
 {
-    std::stringstream ss;
+    stringstream ss;
     int count = 0;
     for (cdr::const_iterator it = begin (); it != end (); ++it)
     {
         if (count != 0)
             ss << ",";
 
-        std::string value;
+        string value;
         if (!it->second.asString (value))
             continue;
 

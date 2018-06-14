@@ -23,3 +23,8 @@ set(PYTHON_INSTALL_FILES
 # Declare install target for python
 install(FILES ${PYTHON_INSTALL_FILES}
   DESTINATION lib/python)
+
+set(SWIG_PY_RUNTIME ${CMAKE_INSTALL_PREFIX}/include/swigPyRuntime.h)
+if(NOT EXISTS ${SWIG_PY_RUNTIME})
+    install(CODE "execute_process(COMMAND swig -c++ -python -external-runtime ${SWIG_PY_RUNTIME})")
+endif(NOT EXISTS ${SWIG_PY_RUNTIME})
