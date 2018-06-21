@@ -105,7 +105,6 @@
         }
         else if (PyFloat_Check (v))
         {
-            printf("Checking for double");
             double val = PyFloat_AsDouble (v);
             self->setDouble (key, val);
         }
