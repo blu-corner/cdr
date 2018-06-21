@@ -132,6 +132,20 @@
             self->setDateTime (key, dt);
         }
     }
+
+    PyObject* keys () {
+        PyObject* ret = PyList_New (self->size ());
+        neueda::cdr::const_iterator it = self->begin ();
+        int idx = 0;
+
+        while(it != self->end ())
+        {
+            PyList_SetItem (ret, idx++, PyInt_FromSize_t(it->first));
+            it++;
+        }
+
+        return ret;
+    }
 }
 
 %include "cdr.i"
