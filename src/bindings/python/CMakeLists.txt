@@ -3,7 +3,6 @@
 #
 # Include python
 find_package(PythonInterp REQUIRED)
-set(Python_ADDITIONAL_VERSIONS 2.7)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_PATH})
 
