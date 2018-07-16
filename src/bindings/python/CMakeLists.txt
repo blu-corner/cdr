@@ -16,10 +16,11 @@ swig_link_libraries(cdr cdr ${PYTHON_LIBRARIES})
 
 # Files to install with Python
 set(PYTHON_INSTALL_FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/cdr.py
-  ${CMAKE_CURRENT_BINARY_DIR}/_cdr.so)
+  ${CMAKE_CURRENT_BINARY_DIR}/cdr.py)
 
 # Declare install target for python
+install(TARGETS _cdr
+  DESTINATION lib/python)
 install(FILES ${PYTHON_INSTALL_FILES}
   DESTINATION lib/python)
 
