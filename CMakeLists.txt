@@ -53,13 +53,13 @@ if (UNIX)
 endif (UNIX)
 
 # compile options
-add_compile_options(-Wall)
+add_compile_options(-Wall -c -W -g)
 if (DEBUG)
   message(STATUS "cdr DEBUG: ON")
-  add_compile_options(-g3)
+  set(SUBMODULE_FLAGS ${SUBMODULE_FLAGS} -DDEBUG=on)
 else ()
   message(STATUS "cdr DEBUG: OFF")
-  add_compile_options(-g -O2)
+  add_compile_options(-O3)
 endif (DEBUG)
 
 # allow external projects
