@@ -24,6 +24,7 @@ option(JAVA "Enable Java bindings" OFF)
 option(PYTHON "Enable Python bindings" OFF)
 option(CSHARP "Enable C# bindings" OFF)
 option(COVERAGE "Enable gcov coverage" OFF)
+option(EXAMPLES "Enable examples" ON)
 
 if(COVERAGE)
     set(COVERAGE_COMPILE_FLAGS "-g -O0 -coverage -fprofile-arcs -ftest-coverage")
@@ -86,15 +87,6 @@ endif()
 INCLUDE(CPack)
 SET(CPACK_GENERATOR "TGZ")
 
-INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/cpp/ DESTINATION
-        ${CMAKE_INSTALL_PREFIX}/examples/cpp/)
-
-if(JAVA)
-    INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/java/ DESTINATION
-            ${CMAKE_INSTALL_PREFIX}/examples/java/)
-endif()
-
-if(PYTHON)
-    INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/python/ DESTINATION
-            ${CMAKE_INSTALL_PREFIX}/examples/python/)
+if(EXAMPLES)
+    add_subdirectory(examples)
 endif()
