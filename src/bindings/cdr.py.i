@@ -29,6 +29,23 @@
 }
 
 %extend neueda::cdr {
+    PyObject* getDict (const cdrKey_t& key)
+    {
+        PyObject* dict = PyDict_New ();
+        PyObject* keysList = self->keys ();
+        Py_ssize_t keysLength = PyList_Size (keysList);        
+
+        Py_ssize_t i;
+        for (i = 0; i < keysLength; ++i)
+        {
+            PyObject* pyKey = PyList_GetItem (keysList, i);
+            unsigned PY_LONG_LONG cKey = PyLong_AsUnsignedLongLong (pyKey);
+            PyDict_SetItem (dict, pyKey, self->__getitem__ ((cdrKey_t)cKey));
+        }
+
+        return dict;
+    }
+    
     PyObject* __getitem__(const cdrKey_t& key)
     {
         const neueda::cdrItem* item = self->getItem (key);
@@ -43,6 +60,19 @@
         PyObject* o = NULL;
         switch (item->mType)
         {
+            case neueda::CDR_ARRAY:
+                {
+                    o = PyList_New (item->mArray.size ());
+
+                    /* int idx = 0; */
+                    /* neueda::cdrArray::iterator it; */
+                    /* for (it = item->mArray.begin (); it != item->mArray.end (); ++it) */
+                    /* { */
+                    /*     PyList_SetItem (o, idx++, ) */
+                    /* } */
+                    
+                    return o;
+                }
             case neueda::CDR_STRING:
                 {
                     o = PyString_FromStringAndSize (item->mString.c_str (),
@@ -138,9 +168,9 @@
         neueda::cdr::const_iterator it = self->begin ();
         int idx = 0;
 
-        while(it != self->end ())
+        while (it != self->end ())
         {
-            PyList_SetItem (ret, idx++, PyInt_FromSize_t(it->first));
+            PyList_SetItem (ret, idx++, PyLong_FromUnsignedLongLong (it->first));
             it++;
         }
 
