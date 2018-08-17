@@ -41,6 +41,7 @@
 
 // cant understand nested class const_iterator
 %ignore neueda::cdr::const_iterator;
+%ignore neueda::cdr::iterator;
 %ignore neueda::cdr::begin;
 %ignore neueda::cdr::end;
 %ignore neueda::cdr::getDateTime (const cdrKey_t& key, time_t& value) const;
