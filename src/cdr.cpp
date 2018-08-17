@@ -544,7 +544,7 @@ cdr::findAll (const cdrKey_t& key) const
 void
 cdr::update (cdr& d)
 {
-    for (cdr::const_iterator it = d.begin (); it != d.end (); ++it)
+    for (cdr::iterator it = d.begin (); it != d.end (); ++it)
     {
         cdrItem item = it->second;
         this->setItem (item.mKey, item);

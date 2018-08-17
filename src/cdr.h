@@ -352,6 +352,68 @@ public:
      */
     string toString () const;
 
+    class iterator
+    {
+    public:
+        iterator (orderedItemMap::iterator it)
+        : mIterator (it)
+        {
+        }
+
+        iterator (const iterator& other)
+        : mIterator (other.mIterator)
+        {
+        }
+
+        iterator& operator= (const iterator& other)
+        {
+            mIterator = other.mIterator;
+            return *this;
+        }
+
+        bool operator!= (const iterator& other) const
+        {
+            return mIterator != other.mIterator;
+        }
+
+        bool operator== (const iterator& other) const
+        {
+            return mIterator == other.mIterator;
+        }
+
+        pair<const cdrKey_t, cdrItem>* operator-> (void)
+        {
+            cdrItem* item = mIterator->second;
+            if (item->mPair == NULL)
+                item->mPair = new cdrItem::itemPair (item->mKey, *item);
+            return item->mPair;
+        }
+
+        pair<const cdrKey_t, cdrItem> operator* (void)
+        {
+            cdrItem* item = mIterator->second;
+            if (item->mPair == NULL)
+                item->mPair = new cdrItem::itemPair (item->mKey, *item);
+            return *item->mPair;
+        }
+
+        iterator& operator++ (void)
+        {
+            ++mIterator;
+            return *this;
+        }
+
+        iterator operator++ (int)
+        {
+            iterator tmp (*this);
+            ++mIterator;
+            return tmp;
+        }
+
+    private:
+        orderedItemMap::iterator mIterator;
+    };
+
     class const_iterator
     {
     public:
@@ -422,6 +484,16 @@ public:
     const_iterator end () const
     {
         return const_iterator (mOrdered.end ());
+    }
+
+    iterator begin ()
+    {
+        return iterator (mOrdered.begin ());
+    }
+
+    iterator end ()
+    {
+        return iterator (mOrdered.end ());
     }
 
 private:

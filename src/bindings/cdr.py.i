@@ -29,26 +29,18 @@
 }
 
 %extend neueda::cdr {
-    PyObject* getDict (const cdrKey_t& key)
-    {
-        PyObject* dict = PyDict_New ();
-        PyObject* keysList = self->keys ();
-        Py_ssize_t keysLength = PyList_Size (keysList);        
-
-        Py_ssize_t i;
-        for (i = 0; i < keysLength; ++i)
-        {
-            PyObject* pyKey = PyList_GetItem (keysList, i);
-            unsigned PY_LONG_LONG cKey = PyLong_AsUnsignedLongLong (pyKey);
-            PyDict_SetItem (dict, pyKey, self->__getitem__ ((cdrKey_t)cKey));
-        }
-
-        return dict;
-    }
-    
     PyObject* __getitem__(const cdrKey_t& key)
     {
-        const neueda::cdrItem* item = self->getItem (key);
+        //const neueda::cdrItem* item = self->getItem (key);
+        neueda::cdrItem* item = NULL;
+        for (neueda::cdr::iterator cdr_it = self->begin(); cdr_it != self->end(); ++cdr_it)
+        {
+            if (cdr_it->first == key)
+            {
+                item = &(cdr_it->second);
+                break;
+            }
+        }
         if (item == NULL)
         {
             std::ostringstream oss;
@@ -64,13 +56,19 @@
                 {
                     o = PyList_New (item->mArray.size ());
 
-                    /* int idx = 0; */
-                    /* neueda::cdrArray::iterator it; */
-                    /* for (it = item->mArray.begin (); it != item->mArray.end (); ++it) */
-                    /* { */
-                    /*     PyList_SetItem (o, idx++, ) */
-                    /* } */
-                    
+                     int idx = 0;
+                     neueda::cdrArray::iterator it = item->mArray.begin();
+                     for (; it != item->mArray.end (); ++it)
+                     {
+                         for (neueda::cdr::iterator cdr_it = it->begin(); cdr_it != it->end(); ++cdr_it)
+                         {
+                             swig_type_info* i = SWIG_TypeQuery ("_p_neueda__cdr");
+                             PyObject* obj = SWIG_NewPointerObj(&(*it), i, SWIG_POINTER_OWN);
+                             Py_INCREF (obj);
+                             PyList_SetItem (o, idx++, obj);
+                         }
+                     }
+
                     return o;
                 }
             case neueda::CDR_STRING:
@@ -165,7 +163,7 @@
 
     PyObject* keys () {
         PyObject* ret = PyList_New (self->size ());
-        neueda::cdr::const_iterator it = self->begin ();
+        neueda::cdr::iterator it = self->begin ();
         int idx = 0;
 
         while (it != self->end ())
@@ -175,6 +173,23 @@
         }
 
         return ret;
+    }
+
+    PyObject* getDict ()
+    {
+        PyObject* dict = PyDict_New ();
+        PyObject* keysList = neueda_cdr_keys (self);
+        Py_ssize_t keysLength = PyList_Size (keysList);
+
+        Py_ssize_t i;
+        for (i = 0; i < keysLength; ++i)
+        {
+            PyObject* pyKey = PyList_GetItem (keysList, i);
+            unsigned PY_LONG_LONG cKey = PyLong_AsUnsignedLongLong (pyKey);
+            PyDict_SetItem (dict, pyKey, neueda_cdr___getitem__ (self, cKey));
+        }
+
+        return dict;
     }
 }
 
