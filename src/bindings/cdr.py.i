@@ -159,6 +159,25 @@
 
             self->setDateTime (key, dt);
         }
+        else if (PyList_Check (v))
+        {
+            neueda::cdrArray arr;
+            swig_type_info* i = SWIG_TypeQuery ("_p_neueda__cdr");
+            Py_ssize_t len    = PyList_Size (v);
+
+            for (Py_ssize_t idx = 0; idx < len; ++idx)
+            {
+                PyObject* py_obj = PyList_GetItem (v, idx);
+                neueda::cdr* obj = NULL;
+
+                SWIG_ConvertPtr (py_obj, (void **)&obj, i, 0);
+
+                if (obj != NULL)
+                    arr.push_back (*obj);
+            }
+
+            self->setArray (key, arr);
+        }
     }
 
     PyObject* keys () {
