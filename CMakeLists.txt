@@ -84,9 +84,9 @@ if(TESTS)
   add_subdirectory(test)
 endif()
 
-INCLUDE(CPack)
-SET(CPACK_GENERATOR "TGZ")
-
 if(EXAMPLES)
     add_subdirectory(examples)
 endif()
+
+SET(CPACK_GENERATOR "TGZ")
+INCLUDE(CPack)

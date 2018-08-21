@@ -1,12 +1,12 @@
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/cpp/ DESTINATION
-        ${CMAKE_INSTALL_PREFIX}/examples/cdr/cpp/)
+        examples/cdr/cpp/)
 
 if(JAVA)
     INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/java/ DESTINATION
-            ${CMAKE_INSTALL_PREFIX}/examples/cdr/java/)
+            examples/cdr/java/)
 endif()
 
 if(PYTHON)
     INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/python/ DESTINATION
-            ${CMAKE_INSTALL_PREFIX}/examples/cdr/python/)
+            examples/cdr/python/)
 endif()
