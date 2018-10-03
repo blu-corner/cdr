@@ -15,13 +15,22 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdint.h>
+#include <time.h>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <vector>
 #include <map>
 
+#ifdef WIN32
+#include "asprintf.h"
+
+#define u_int uint32_t
+#define PRINTFLIKE(a, b)
+#define gmtime_r(value, tm) gmtime_s(tm, value)
+#else
 #define PRINTFLIKE(a, b) __attribute__ ((format (printf, a, b)))
+#endif // WIN32
 
 using namespace std;
 
@@ -198,9 +207,7 @@ public:
      * @param value string to assign
      */
     void setString (const cdrKey_t& key, const string& value);
-    void setString (const cdrKey_t& key,
-                    const char* fmt,
-                    ...) PRINTFLIKE(3, 4);
+	void setString(const cdrKey_t& key, const char* fmt, ...) PRINTFLIKE(3, 4);
 
     /**
      * retrieve the value at the given key as a string. This function will

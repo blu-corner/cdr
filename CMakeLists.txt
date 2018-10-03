@@ -4,14 +4,16 @@
 cmake_minimum_required(VERSION 2.8.0)
 project(cdr CXX)
 
-set(CMAKE_C_COMPILER gcc)
-set(CMAKE_CXX_COMPILER g++)
-
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE )
 endif()
 
-if(APPLE)
+if(WIN32)
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+  set(BUILD_SHARED_LIBS TRUE)
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+elseif(APPLE)
   set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
   set(CMAKE_XCODE_ATTRIBUTE_GCC_VERSION "com.apple.compilers.llvm.clang.1_0")
   set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-undefined,dynamic_lookup")
@@ -53,13 +55,18 @@ if (UNIX)
 endif (UNIX)
 
 # compile options
-add_compile_options(-Wall -c -W -g)
+add_compile_options(-Wall)
 if (DEBUG)
+  if(UNIX)
+	  add_compile_options(-g3)
+  endif()
   message(STATUS "cdr DEBUG: ON")
   set(SUBMODULE_FLAGS ${SUBMODULE_FLAGS} -DDEBUG=on)
 else ()
   message(STATUS "cdr DEBUG: OFF")
-  add_compile_options(-O3)
+  if(UNIX)
+	  add_compile_options(-g -O2)
+  endif()
 endif (DEBUG)
 
 # allow external projects
@@ -74,7 +81,7 @@ if(TESTS)
   ExternalProject_Add(
     googletest
     SOURCE_DIR ${PROJECT_SOURCE_DIR}/ext/googletest
-    CMAKE_ARGS -DBUILD_GMOCK=ON -DBUILD_GTEST=ON -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/googletest -DCMAKE_INSTALL_LIBDIR=${CMAKE_BINARY_DIR}/googletest/lib
+    CMAKE_ARGS -DBUILD_GMOCK=ON -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/googletest -DCMAKE_INSTALL_LIBDIR=${CMAKE_BINARY_DIR}/googletest/lib
     )
   
   include(CTest)
