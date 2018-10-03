@@ -13,12 +13,20 @@ file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cc)
   
 add_executable(unittest ${SRC_FILES})
 
+if(WIN32)
+target_link_libraries(unittest
+  cdr
+  gtest
+  gmock
+  )
+else()
 target_link_libraries(unittest
   cdr
   gtest
   gmock
   pthread
   )
+endif()
 
 add_test(NAME unittest
   COMMAND unittest

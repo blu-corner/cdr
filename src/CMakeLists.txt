@@ -5,6 +5,11 @@ set(CDR_HEADERS
   cdr.h
   )
 
+if(WIN32)
+  set(CDR_HEADERS ${CDR_HEADERS} asprintf.h)
+endif()
+
+
 install(FILES ${CDR_HEADERS}
   DESTINATION include/cdr
     )
@@ -13,12 +18,24 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/src
   )
 
+
+if(WIN32)
+add_library(cdr SHARED
+  cdr.cpp
+  asprintf.cpp
+  vasprintf.cpp
+  )
+else()
 add_library(cdr SHARED
   cdr.cpp
   )
+endif()
 
 install(TARGETS cdr
   EXPORT ${PROJECT_NAME}
+  COMPONENT library
+  RUNTIME DESTINATION lib
+  ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib)
 
 install(
