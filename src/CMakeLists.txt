@@ -5,10 +5,14 @@ set(CDR_HEADERS
   cdr.h
   )
 
+set (CDR_SOURCES cdr.cpp)
+
 if(WIN32)
   set(CDR_HEADERS ${CDR_HEADERS} asprintf.h)
+  set(CDR_SOURCES ${CDR_SOURCES}
+                  asprintf.cpp
+                  vasprintf.cpp)
 endif()
-
 
 install(FILES ${CDR_HEADERS}
   DESTINATION include/cdr
@@ -19,17 +23,7 @@ include_directories(
   )
 
 
-if(WIN32)
-add_library(cdr SHARED
-  cdr.cpp
-  asprintf.cpp
-  vasprintf.cpp
-  )
-else()
-add_library(cdr SHARED
-  cdr.cpp
-  )
-endif()
+add_library(cdr SHARED ${CDR_SOURCES})
 
 install(TARGETS cdr
   EXPORT ${PROJECT_NAME}
