@@ -10,23 +10,17 @@ include_directories(
 link_directories(${CMAKE_BINARY_DIR}/googletest/lib)
 
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cc)
+set (LIBS cdr
+          gtest
+          gmock)
+
+if(NOT WIN32)
+    set (LIBS "${LIBS}"
+              pthread)
+endif()
   
 add_executable(unittest ${SRC_FILES})
-
-if(WIN32)
-target_link_libraries(unittest
-  cdr
-  gtest
-  gmock
-  )
-else()
-target_link_libraries(unittest
-  cdr
-  gtest
-  gmock
-  pthread
-  )
-endif()
+target_link_libraries(unittest ${LIBS})
 
 add_test(NAME unittest
   COMMAND unittest
