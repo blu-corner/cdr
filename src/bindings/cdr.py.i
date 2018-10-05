@@ -196,6 +196,7 @@
 
     PyObject* toPythonDict ()
     {
+        PyGILState_STATE gil = PyGILState_Ensure ();
         PyObject* dict = PyDict_New ();
         PyObject* key;
         PyObject* val;
@@ -228,6 +229,7 @@
             it++;
         }
 
+        PyGILState_Release (gil);
         return dict;
     }
 }
