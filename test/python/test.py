@@ -54,6 +54,22 @@ class TestCdr(unittest.TestCase):
         self.assertEqual(e.getString(1), f[0].getString(1))
         self.assertEqual(e.getString(2), f[0].getString(2))
 
+    def test_to_python_dict(self):
+        d = Cdr()
+        e = Cdr()
+        f = Cdr()
+
+        f[21] = 400
+
+        e[11] = 300
+        e[12] = [f]
+
+        d[1] = 100
+        d[2] = 200
+
+        d[3] = [e]
+        assert(d.toPythonDict()[3][0][12][0][21] == 400)
+
 
 if __name__ == '__main__':
     unittest.main()

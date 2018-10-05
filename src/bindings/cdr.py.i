@@ -194,18 +194,38 @@
         return ret;
     }
 
-    PyObject* getDict ()
+    PyObject* toPythonDict ()
     {
         PyObject* dict = PyDict_New ();
-        PyObject* keysList = neueda_cdr_keys (self);
-        Py_ssize_t keysLength = PyList_Size (keysList);
+        PyObject* key;
+        PyObject* val;
+        PyObject* d;
 
-        Py_ssize_t i;
-        for (i = 0; i < keysLength; ++i)
+        neueda::cdr::iterator it = self->begin ();
+
+        while (it != self->end ())
         {
-            PyObject* pyKey = PyList_GetItem (keysList, i);
-            unsigned PY_LONG_LONG cKey = PyLong_AsUnsignedLongLong (pyKey);
-            PyDict_SetItem (dict, pyKey, neueda_cdr___getitem__ (self, cKey));
+            key = Py_BuildValue ("K", it->first);
+            if (it->second.mType == neueda::CDR_ARRAY)
+            {
+                // cdrArray
+                int idx = 0;
+                PyObject* cdrs = PyList_New (it->second.mArray.size ());
+                for (neueda::cdrArray::const_iterator aIt = it->second.mArray.begin ();
+                     aIt != it->second.mArray.end ();
+                     ++aIt)
+                {
+                    d = neueda_cdr_toPythonDict (const_cast<neueda::cdr*>(&(*aIt)));
+                    PyList_SetItem (cdrs, idx++, d);
+                }
+                PyDict_SetItem (dict, key, cdrs);
+            }
+            else
+            {
+                val = neueda_cdr___getitem__ (self, it->first);
+                PyDict_SetItem (dict, key, val);
+            }
+            it++;
         }
 
         return dict;
