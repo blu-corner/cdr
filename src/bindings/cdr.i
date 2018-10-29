@@ -56,7 +56,7 @@
     int64_t getInteger (const cdrKey_t& key) {
         int64_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -70,7 +70,7 @@
     int64_t getInt64 (const cdrKey_t& key) {
         int64_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -84,7 +84,7 @@
     uint64_t getUInt64 (const cdrKey_t& key) {
         uint64_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -98,7 +98,7 @@
     int32_t getInt32 (const cdrKey_t& key) {
         int32_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -112,7 +112,7 @@
     uint32_t getUInt32 (const cdrKey_t& key) {
         uint32_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -126,7 +126,7 @@
     int16_t getInt16 (const cdrKey_t& key) {
         int16_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -140,7 +140,7 @@
     uint16_t getUInt16 (const cdrKey_t& key) {
         uint16_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -154,7 +154,7 @@
     int8_t getInt8 (const cdrKey_t& key) {
         int8_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -168,7 +168,7 @@
     uint8_t getUInt8 (const cdrKey_t& key) {
         uint8_t value = 0;
         bool ok = self->getInteger (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -182,7 +182,7 @@
     double getDouble (const cdrKey_t& key) {
         double value = 0;
         bool ok = self->getDouble (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -196,7 +196,7 @@
     std::string getString (const cdrKey_t& key) {
         std::string value;
         bool ok = self->getString (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -210,7 +210,7 @@
     neueda::cdrDateTime getDateTime (const cdrKey_t& key) {
         neueda::cdrDateTime value;
         bool ok = self->getDateTime (key, value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve value for key: "
@@ -224,7 +224,7 @@
     neueda::cdrArray* getArray (const cdrKey_t& key) {
         neueda::cdrArray* value = NULL;
         bool ok = self->getArray (key, (const neueda::cdrArray**) &value);
-        if (not ok)
+        if (!ok)
         {
             std::ostringstream oss;
             oss << "failed to retrieve cdrArray for key: "
