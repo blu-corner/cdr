@@ -2,7 +2,7 @@
  * Copyright 2014-2018 Neueda Ltd.
  */
 using System;
-using com.neueda.cdr;
+using Neueda.Cdr;
 
 class example
 {
@@ -12,7 +12,7 @@ class example
         long field2 = 2;
         long field3 = 55;
 
-        cdr d = new cdr ();
+        Cdr d = new Cdr ();
         d.setInteger (field1, 123);
 
         Console.WriteLine (d.toString());
