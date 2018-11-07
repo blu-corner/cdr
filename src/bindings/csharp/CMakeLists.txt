@@ -2,17 +2,20 @@
 # Copyright 2014-2018 Neueda Ltd.
 #
 
-if(NOT WIN32)
-  set(CSHARP_OUTPUT_NAME "Cdr.dll")
-else()
-  set(CSHARP_OUTPUT_NAME "CdrSWIG.dll")
-endif()
+if(NOT CSHARP_COMPILER)
+  if(NOT WIN32)
+    find_program(CSHARP_COMPILER mcs)
+  else()
+    find_program(CSHARP_COMPILER csc)
+  endif()
 
-find_program(MCS mcs)
-if(NOT MCS)
-  message(FATAL_ERROR "Failed to find mono compiler")
+  if(NOT CSHARP_COMPILER)
+    message(FATAL_ERROR "Failed to find csharp compiler")
+  endif()
 endif()
-message(STATUS "Found mono compiler: ${MCS}")
+message(STATUS "Found csharp compiler: ${CSHARP_COMPILER}")
+set(CSHARP_OUTPUT_NAME "CdrBindings.dll")
+
 
 # set the flags for swig
 set(CMAKE_SWIG_FLAGS -namespace Neueda.Cdr -dllimport CdrCsharp -outfile Cdr.cs)
@@ -25,7 +28,7 @@ swig_link_libraries(CdrCsharp cdr)
 
 # Files to install with csharp
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${CSHARP_OUTPUT_NAME}
-  COMMAND ${MCS} -target:library -out:${CMAKE_CURRENT_BINARY_DIR}/${CSHARP_OUTPUT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/*.cs
+  COMMAND ${CSHARP_COMPILER} -target:library -out:${CMAKE_CURRENT_BINARY_DIR}/${CSHARP_OUTPUT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/*.cs
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   DEPENDS ${CSHARP_SRC_FILES}
   COMMENT "Generating Csharp DLL"
