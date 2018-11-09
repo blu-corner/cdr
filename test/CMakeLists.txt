@@ -21,6 +21,7 @@ endif()
   
 add_executable(unittest ${SRC_FILES})
 target_link_libraries(unittest ${LIBS})
+add_dependencies(unittest googletest)
 
 add_test(NAME unittest
   COMMAND unittest
