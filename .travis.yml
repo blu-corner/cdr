@@ -28,4 +28,4 @@ script:
     - cppcheck -f --enable=all --suppress=missingIncludeSystem --xml ../src/ ../test/ 2> ./cppcheck_report.xml
     - vera++ -c vera.xml `find ../src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`
     - gcovr -r ./ -x > coverage_report.xml
-    - sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.cxx.compiler.regex='^(.*):([0-9]+):[0-9]+: warning: (.*)\\[(.*)\\]\$' -Dsonar.sources=../src/
+    - sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.sources=../src/
