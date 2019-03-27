@@ -1,0 +1,10 @@
+language: cpp
+compiler: gcc
+os:
+    - linux
+
+branches:
+    only:
+        - master
+
+script: mkdir build && cd build && cmake -DTESTS=ON ../ && make install
