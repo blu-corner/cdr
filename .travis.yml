@@ -10,7 +10,7 @@ branches:
 
 addons:
     sonarcloud:
-        organization: "neueda-blu-corner"
+        organization: "alex952-github"
 
 before_install:
     - sudo apt-get update
@@ -28,4 +28,4 @@ script:
     - cppcheck -f --enable=all --suppress=missingIncludeSystem --xml ../src/ ../test/ 2> ./cppcheck_report.xml
     - vera++ -c vera.xml `find ../src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`
     - gcovr -r ./ -x > coverage_report.xml
-    - sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.sources=../src/
+    - sonar-scanner -Dsonar.cxx.cppcheck.reportPath=cppcheck_report.xml -Dsonar.cxx.vera.reportPath=vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.projectKey=alex952_cdr -Dsonar.sources=../src/
