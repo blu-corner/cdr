@@ -27,5 +27,6 @@ before_script:
 script:
     - cmake -DTESTS=ON ../
     - build-wrapper-linux-x86-64 --out-dir ./Linux-output make install
+    - gcov `find ./src/ ./test -regextype posix-egrep -regex ".*\\.(o)"`
     - cd ../
     - sonar-scanner
