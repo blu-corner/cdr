@@ -10,7 +10,7 @@ branches:
 
 addons:
     sonarcloud:
-        organization: "alex952-github"
+        organization: "neueda-blu-corner"
 
 before_install:
     - sudo apt-get update
