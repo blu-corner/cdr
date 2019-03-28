@@ -29,4 +29,4 @@ script:
     - vera++ -c vera.xml `find ../src/ -regextype posix-egrep -regex ".*\\.(cc|cpp|h|hpp)"`
     - gcovr -r ./ -x > coverage_report.xml
     - cd ../
-    - sonar-scanner -Dsonar.cxx.cppcheck.reportPath=build/cppcheck_report.xml -Dsonar.cxx.vera.reportPath=build/vera.xml -Dsonar.cxx.valgrind.reportPath=build/valgrind_report.xml -Dsonar.cxx.coverage.reportPath=build/coverage_report.xml -Dsonar.cxx.compiler.parser=GCC -Dsonar.cxx.compiler.reportPath=compiler.log -Dsonar.cxx.compiler.charset=UTF-8 -Dsonar.projectKey=alex952_cdr -Dsonar.sources=./src/
+    - sonar-scanner
