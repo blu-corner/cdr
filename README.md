@@ -1,4 +1,5 @@
-# cdr (Common Data Representation)
+# cdr (Common Data Representation) [![Build Status](https://travis-ci.com/blu-corner/cdr.svg?branch=master)](https://travis-ci.com/blu-corner/cdr) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=blu-corner_cdr&metric=alert_status)](https://sonarcloud.io/dashboard?id=blu-corner_cdr)
+
 
 cdr is a data structure for storage of heterogenous values:
 
