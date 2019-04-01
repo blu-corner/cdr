@@ -2,10 +2,12 @@ language: cpp
 compiler: gcc
 os:
     - linux
+sudo: required
 
 branches:
     only:
         - master
+
 addons:
     sonarcloud:
         organization: "neueda-blu-corner"
