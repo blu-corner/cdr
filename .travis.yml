@@ -23,6 +23,6 @@ script:
     - cmake -DCOVERAGE=ON -DTESTS=ON ../
     - build-wrapper-linux-x86-64 --out-dir ./Linux-output make install
     - ./install/bin/unittest
-    - 'if [ "$TRAVIS_PULL_REQUEST" = "false"  ]; gcov `find ./src/ ./test -regextype posix-egrep -regex ".*\\.(o)"`; fi'
+    - gcov `find ./src/ ./test -regextype posix-egrep -regex ".*\\.(o)"`
     - cd ../
     - 'if [ "$TRAVIS_PULL_REQUEST" = "false"  ]; then sonar-scanner; fi' # sonar only on non-PRs
