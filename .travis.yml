@@ -30,4 +30,4 @@ script:
     - ./install/bin/unittest
     - gcov `find ./src/ ./test -regextype posix-egrep -regex ".*\\.(o)"`
     - cd ../
-    - sonar-scanner
+    - 'if [ "$TRAVIS_PULL_REQUEST" = "false"  ]; then sonar-scanner; fi' # sonar only on non-PRs
