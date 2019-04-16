@@ -88,12 +88,14 @@ struct cdrItem
                  mDouble (0),
                  mInteger (0)
     {}
+
     cdrItem (cdrItemType type) : mKey(0),
                                  mPair (NULL),
                                  mType (type),
                                  mDouble (0),
                                  mInteger (0)
     {}
+
     cdrItem (const cdrItem& other) : mKey (other.mKey),
                                      mIndex (other.mIndex),
                                      mPair (NULL),
@@ -104,7 +106,24 @@ struct cdrItem
                                      mDateTime (other.mDateTime),
                                      mArray (other.mArray)
     {}
+
     ~cdrItem () { delete mPair; }
+
+    cdrItem& operator= (const cdrItem& obj)
+    {
+        if (this != &obj)
+        {
+            mKey = obj.mKey;
+            mIndex = obj.mIndex;
+            mType = obj.mType;
+            mString = obj.mString;
+            mDouble = obj.mDouble;
+            mInteger = obj.mInteger;
+            mDateTime = obj.mDateTime;
+            mArray = obj.mArray;
+        }
+        return *this;
+    }
 
     /**
      * Converts the item value to a string and assigns to value.
@@ -367,6 +386,10 @@ public:
         {
         }
 
+        ~iterator ()
+        {
+        }
+
         iterator (const iterator& other)
         : mIterator (other.mIterator)
         {
@@ -374,7 +397,10 @@ public:
 
         iterator& operator= (const iterator& other)
         {
-            mIterator = other.mIterator;
+            if (this != &other)
+            {
+                mIterator = other.mIterator;
+            }
             return *this;
         }
 
@@ -434,9 +460,16 @@ public:
         {
         }
 
+        ~const_iterator ()
+        {
+        }
+
         const_iterator& operator= (const const_iterator& other)
         {
-            mIterator = other.mIterator;
+            if (this != &other)
+            {
+                mIterator = other.mIterator;
+            }
             return *this;
         }
 

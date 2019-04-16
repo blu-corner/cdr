@@ -64,15 +64,18 @@ cdr::cdr (const cdr& obj) :
 cdr&
 cdr::operator= (const cdr& obj)
 {
-    mNextIndex = obj.mNextIndex;
-    mItems = obj.mItems;
-
-    mOrdered.clear ();
-    for (itemMap::iterator itr = mItems.begin();
-         itr != mItems.end();
-         ++itr)
+    if (this != &obj)
     {
-        mOrdered[itr->second.mIndex] = &itr->second;
+        mNextIndex = obj.mNextIndex;
+        mItems = obj.mItems;
+
+        mOrdered.clear ();
+        for (itemMap::iterator itr = mItems.begin();
+             itr != mItems.end();
+             ++itr)
+        {
+            mOrdered[itr->second.mIndex] = &itr->second;
+        }
     }
 
     return *this;
