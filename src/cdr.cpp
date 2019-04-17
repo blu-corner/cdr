@@ -40,8 +40,9 @@ cdrItem::asString (string& value) const
         snprintf (tmp, sizeof tmp, "<array of %zu>", mArray.size ());
         value.assign (tmp);
         return true;
+    default:
+        return false;
     }
-    return false;
 }
 
 cdr::cdr () :
@@ -444,7 +445,8 @@ cdr::getDateTime (const cdrKey_t& key, time_t& value) const
     tm tm;
     if (!getDateTime (key, tm))
         return false;
-    return mktime (&tm);
+    value = mktime (&tm);
+    return true;
 }
 
 bool
@@ -460,7 +462,7 @@ cdr::getDateTime (const cdrKey_t& key, tm& value) const
     value.tm_mday = tmp.mDay;
     if (tmp.mMonth > 0)
         value.tm_mon = tmp.mMonth - 1;
-    value.tm_year = tmp.mYear + 1900;
+    value.tm_year = tmp.mYear - 1900;
     return true;
 }
 

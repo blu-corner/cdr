@@ -32,10 +32,10 @@
 #define PRINTFLIKE(a, b) __attribute__ ((format (printf, a, b)))
 #endif // WIN32
 
-using namespace std;
-
 namespace neueda
 {
+
+using namespace std;
 
 class cdr;
 

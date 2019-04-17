@@ -603,3 +603,26 @@ TEST (CDR, FIND_IN_ARRAY_DATETIME)
     ASSERT_TRUE (ok);
     ASSERT_EQ (value, "2021-02-01 01:25:21.0000");
 }
+
+TEST (CDR, DATE_TIME)
+{
+    time_t tin;
+    time_t tout;
+
+    tm tmin;
+    tm tmout;
+
+    time (&tin);
+    gmtime_r (&tin, &tmin);
+
+    cdr d;
+    d.setDateTime (1, tin);
+
+    // get as time_t
+    ASSERT_TRUE (d.getDateTime (1, tout));
+    ASSERT_EQ (tin, tout);
+
+    // get as tm
+    ASSERT_TRUE (d.getDateTime (1, tmout));
+    ASSERT_FLOAT_EQ (difftime (mktime (&tmin), mktime (&tmout)), 0);
+}
