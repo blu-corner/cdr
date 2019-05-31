@@ -49,7 +49,7 @@ else()
 endif()
 
 set_target_properties(${SWIG_MODULE_CdrCsharp_REAL_NAME} PROPERTIES OUTPUT_NAME "CdrCsharp")
-if(${CSHARP_DYLIB_PREFIX})
+if(NOT CSHARP_DYLIB_PREFIX STREQUAL "")
   set_target_properties(${SWIG_MODULE_CdrCsharp_REAL_NAME} PROPERTIES PREFIX ${CSHARP_DYLIB_PREFIX})
 endif()
 set_target_properties(${SWIG_MODULE_CdrCsharp_REAL_NAME} PROPERTIES SUFFIX ${CSHARP_DYLIB_SUFFIX})
