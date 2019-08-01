@@ -216,7 +216,7 @@
 #else
         bytes = PyString_FromStringAndSize (buf, used);
 #endif
-        /* delete[] buf; */
+        delete[] buf;
         return bytes;
     }
 
