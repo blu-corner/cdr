@@ -372,6 +372,37 @@ public:
     vector<const cdrItem*> findAll (const cdrKey_t& key) const;
 
     /**
+     * Return the size of the cdr were it to be serialized
+     *
+     */
+    size_t serializedSize ()
+    {
+        char* data = NULL;
+        size_t used = 0;
+        serialize (data, used, false);
+        return used;
+    }
+
+    /**
+     * Serializes the given cdr to bytes for network send/file persistence. Set
+     * write to false to determine the size of the serialized cdr only.
+     *
+     * @param cdr
+     * @param data
+     * @param used
+     * @param write
+     */
+    bool serialize (char* data, size_t& used, bool write=true) const;
+
+    /**
+     * Deserializes the data buffer into a cdr object
+     *
+     * @param buffer
+     * @param used
+     */
+    bool deserialize (const char* data, size_t& used);
+
+    /**
      * Returns a string representation of the cdr
      *
      * @return string
@@ -540,6 +571,15 @@ private:
     void findInChildren (const orderedItemMap* items,
                          const cdrKey_t& key,
                          vector<const cdrItem*>& found) const;
+
+    bool serializeItem (const cdrItem* item,
+                        char* data,
+                        size_t& used,
+                        uint16_t& fields,
+                        bool write) const;
+
+    bool deserializeItem (const char* data,
+                          size_t& used);
 
     u_int          mNextIndex;
     orderedItemMap mOrdered;

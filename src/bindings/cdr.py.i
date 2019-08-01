@@ -3,8 +3,6 @@
  */
 %feature("autodoc");
 
-%feature("python:slot", "tp_str", functype="reprfunc") neueda::cdr::toString;
-
 %{
 #include <cdr.h>
 
@@ -29,6 +27,16 @@
 }
 
 %extend neueda::cdr {
+    PyObject* __repr__ ()
+    {
+        std::string op = self->toString ();
+#if PY_MAJOR_VERSION >= 3
+        return PyBytes_FromStringAndSize (op.c_str (), op.length ());
+#else
+        return PyString_FromStringAndSize (op.c_str (), op.length ());
+#endif
+    }
+
     PyObject* __getitem__(const cdrKey_t& key)
     {
         //const neueda::cdrItem* item = self->getItem (key);
@@ -192,6 +200,48 @@
         }
 
         return ret;
+    }
+
+    PyObject* serialize ()
+    {
+        char* buf = new char[self->serializedSize ()];
+        size_t used = 0;
+
+        if (!self->serialize (buf, used, true))
+            return NULL;
+
+        PyObject* bytes;
+#if PY_MAJOR_VERSION >= 3
+        bytes = PyBytes_FromStringAndSize (buf, used);
+#else
+        bytes = PyString_FromStringAndSize (buf, used);
+#endif
+        /* delete[] buf; */
+        return bytes;
+    }
+
+    PyObject* deserialize (PyObject* v)
+    {
+        char* buf;
+        Py_ssize_t len;
+#if PY_MAJOR_VERSION >= 3
+        if (!PyBytes_Check (v))
+            return NULL;
+
+        if (!PyBytes_AsStringAndSize (v, &buf, &len))
+            return NULL;
+#else
+        if (!PyString_Check (v))
+            return NULL;
+
+        PyString_AsStringAndSize (v, &buf, &len);
+#endif
+        size_t used = 0;
+        if (!self->deserialize (buf, used))
+            return NULL;
+
+        Py_INCREF (Py_None);
+        return Py_None;
     }
 
     PyObject* toPythonDict ()
