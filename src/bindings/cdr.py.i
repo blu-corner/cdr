@@ -110,7 +110,7 @@
                             item->mDateTime.mHour,
                             item->mDateTime.mMinute,
                             item->mDateTime.mSecond,
-                            item->mDateTime.mMillisecond);
+                            item->mDateTime.mNanosecond / 1000);
                     return o;
                 }
 
@@ -163,7 +163,7 @@
             dt.mHour = PyDateTime_DATE_GET_HOUR (v);
             dt.mMinute = PyDateTime_DATE_GET_MINUTE (v);
             dt.mSecond = PyDateTime_DATE_GET_SECOND (v);
-            dt.mMillisecond = PyDateTime_DATE_GET_MICROSECOND (v);
+            dt.mNanosecond = PyDateTime_DATE_GET_MICROSECOND (v);
 
             self->setDateTime (key, dt);
         }

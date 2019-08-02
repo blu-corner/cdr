@@ -150,7 +150,7 @@ cdr::setItem (const cdrKey_t& key, cdrItem& item)
 const cdrItem*
 cdr::getItem (const cdrKey_t& key) const
 {
-    map<int64_t, cdrItem>::const_iterator it = mItems.find (key);
+    map<cdrKey_t, cdrItem>::const_iterator it = mItems.find (key);
     if (it == mItems.end ())
         return NULL;
     return &it->second;
