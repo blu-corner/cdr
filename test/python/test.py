@@ -3,6 +3,7 @@
 #
 from cdr import Cdr
 import unittest
+from datetime import datetime
 
 
 field1 = 1
@@ -53,6 +54,15 @@ class TestCdr(unittest.TestCase):
         f = d.getArray(1)
         self.assertEqual(e.getString(1), f[0].getString(1))
         self.assertEqual(e.getString(2), f[0].getString(2))
+
+    def test_serialize_dt(self):
+        d = Cdr()
+        d[52] = datetime.now()
+        data = d.serialize()
+
+        e = Cdr()
+        e.deserialize(data)
+        self.assertEqual(e[52], d[52])
 
     def test_to_python_dict(self):
         d = Cdr()
