@@ -587,4 +587,171 @@ cdr::toString () const
     return ss.str ();
 }
 
+bool
+cdr::serialize (char* data,
+                size_t& used,
+                bool write) const
+{
+    uint16_t* mFields = NULL;
+    if (write)
+        mFields = (uint16_t*)(data + used);
+
+    used += sizeof (uint16_t);
+
+    uint16_t fields = 0;
+
+    for (itemMap::const_iterator itr = mItems.begin();
+         itr != mItems.end();
+         ++itr)
+    {
+        if (!serializeItem (&itr->second, data, used, fields, write))
+            return false;
+    }
+
+    if (write)
+        *mFields = fields;
+
+    return true;
+}
+
+bool
+cdr::deserialize (const char* data,
+                  size_t& used)
+{
+    uint16_t fields = *((uint16_t*)(data + used));
+    used += sizeof (uint16_t);
+        
+    int count = 0;
+    while (count < fields)
+    {
+        if (!deserializeItem (data, used))
+            return false;
+        count++;
+    }
+    return true;
+}
+
+bool
+cdr::serializeItem (const cdrItem* item,
+                    char* data,
+                    size_t& used,
+                    uint16_t& fields,
+                    bool write) const
+{
+    if (write)
+        *((cdrKey_t *)(data + used)) = item->mKey;
+    used += sizeof (cdrKey_t);
+
+    if (write)
+        *((int8_t *)(data + used)) = item->mType;
+    used += sizeof (int8_t);
+
+    switch (item->mType)
+    {
+        case CDR_INTEGER:
+            if (write)
+                *((int16_t *)(data + used)) = sizeof (int64_t);
+            used += sizeof (int16_t);
+
+            if (write)
+                *((int64_t *)(data + used)) = item->mInteger;
+            used += sizeof (int64_t);
+            break;
+        case CDR_DOUBLE:
+            if (write)
+                *((int16_t *)(data + used)) = sizeof (double);
+            used += sizeof (int16_t);
+
+            if (write)
+                *((double *)(data + used)) = item->mDouble;
+            used += sizeof (double);
+            break;
+        case CDR_STRING:
+            if (write)
+                *((int16_t *)(data + used)) = item->mString.size ();
+            used += sizeof (int16_t);
+
+            if (write)
+                memcpy ((void*)(data + used), (void*)(item->mString.c_str()), item->mString.size ());
+            used += item->mString.size ();
+            break;
+        case CDR_ARRAY:
+        {
+            int16_t elems = item->mArray.size();
+            if (write)
+                *((int16_t *)(data + used)) = elems;
+            used += sizeof (int16_t);
+
+            for (cdrArray::const_iterator itr = item->mArray.begin(); 
+                 itr != item->mArray.end();
+                 ++itr)
+            {
+                itr->serialize (data, used, write);
+            }
+            break;
+        }
+        default:
+            return false;
+    }
+
+    fields++;
+    return true;
+}
+
+bool
+cdr::deserializeItem (const char* data, size_t& used)
+{
+    cdrKey_t key = *(cdrKey_t*)(data + used);
+    used += sizeof (cdrKey_t);
+
+    int8_t type = *(int8_t *)(data + used);
+    used += sizeof (type);
+
+    int16_t size = *(int16_t *)(data + used);
+    used += sizeof (int16_t);
+
+    switch (type)
+    {
+        case CDR_INTEGER:
+        {
+            int64_t val = *(int64_t *)(data + used);
+            used += sizeof (int64_t);
+
+            setInteger (key, val);
+            break;
+        }
+        case CDR_DOUBLE:
+        {
+            double val = *(double *)(data + used);
+            used += sizeof (double);
+
+            setDouble (key, val);
+            break;
+        }
+        case CDR_STRING:
+        {
+            string val ((data + used), size);
+            used += size;
+
+            setString (key, val);
+            break;
+        }
+        case CDR_ARRAY:
+        {
+            cdrArray cdrs;
+            for (int i = 0; i < size; i++)
+            {
+                cdr* c = new cdr ();
+                c->deserialize (data, used);
+                cdrs.push_back (*c);
+            }
+            setArray (key, cdrs);
+            break;
+        }
+        default:
+            return false;
+    }
+    return true;
+}
+
 }
