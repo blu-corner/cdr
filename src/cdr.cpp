@@ -33,7 +33,7 @@ cdrItem::asString (string& value) const
                   mDateTime.mHour,
                   mDateTime.mMinute,
                   mDateTime.mSecond,
-                  mDateTime.mMillisecond);
+                  mDateTime.mNanosecond);
         value.assign (tmp);
         return true;
     case CDR_ARRAY:
@@ -150,7 +150,7 @@ cdr::setItem (const cdrKey_t& key, cdrItem& item)
 const cdrItem*
 cdr::getItem (const cdrKey_t& key) const
 {
-    map<int64_t, cdrItem>::const_iterator it = mItems.find (key);
+    map<cdrKey_t, cdrItem>::const_iterator it = mItems.find (key);
     if (it == mItems.end ())
         return NULL;
     return &it->second;
@@ -690,6 +690,26 @@ cdr::serializeItem (const cdrItem* item,
             }
             break;
         }
+        case CDR_DATETIME:
+        {
+            if (write)
+                *((int16_t *)(data + used)) = 2 * sizeof (int64_t);
+            used += sizeof (int16_t);
+
+            time_t t;
+            if (!getDateTime (item->mKey, t))
+                return false;
+
+            if (write)
+            {
+                // write seconds from epoch and then nanos
+                *((int64_t *)(data + used)) = (int64_t)t;
+                *((int64_t *)(data + used + sizeof (int64_t))) = (int64_t)item->mDateTime.mNanosecond;
+            }
+
+            used += 2 * sizeof (int64_t);
+            break;
+        }
         default:
             return false;
     }
@@ -746,6 +766,28 @@ cdr::deserializeItem (const char* data, size_t& used)
                 cdrs.push_back (*c);
             }
             setArray (key, cdrs);
+            break;
+        }
+        case CDR_DATETIME:
+        {
+            int64_t epoch = *(int64_t *)(data + used);
+            used += sizeof (int64_t);
+            int64_t nanos = *(int64_t *)(data + used);
+            used += sizeof (int64_t);
+
+            tm tm;
+            gmtime_r (&epoch, &tm);
+
+            cdrItem item (CDR_DATETIME);
+            item.mDateTime.mHour = tm.tm_hour;
+            item.mDateTime.mMinute = tm.tm_min;
+            item.mDateTime.mSecond = tm.tm_sec;
+            item.mDateTime.mDay = tm.tm_mday;
+            item.mDateTime.mMonth = tm.tm_mon + 1;
+            item.mDateTime.mYear = tm.tm_year + 1900;
+            item.mDateTime.mNanosecond = nanos;
+            setItem (key, item);
+
             break;
         }
         default:

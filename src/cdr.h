@@ -41,7 +41,7 @@ class cdr;
 
 typedef vector<cdr> cdrArray;
 
-typedef int64_t cdrKey_t;
+typedef int32_t cdrKey_t;
 
 /* Struct for storage of date time within a cdr */
 struct cdrDateTime
@@ -49,7 +49,7 @@ struct cdrDateTime
     cdrDateTime () : mHour (0),
                      mMinute (0),
                      mSecond (0),
-                     mMillisecond (0),
+                     mNanosecond (0),
                      mDay (0),
                      mMonth (0),
                      mYear (0)
@@ -58,7 +58,7 @@ struct cdrDateTime
     u_int mHour;
     u_int mMinute;
     u_int mSecond;
-    u_int mMillisecond;
+    u_int mNanosecond;
 
     u_int mDay;
     u_int mMonth;
