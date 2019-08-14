@@ -11,6 +11,12 @@
 #include <string>
 #include "datetime.h"
 #include "Python.h"
+
+#if PY_MAJOR_VERSION >= 3
+#define PyString_AsStringAndSize PyBytes_AsStringAndSize
+#define PyString_FromStringAndSize PyBytes_FromStringAndSize
+#endif
+
 %}
 
 %include "exception.i"
@@ -30,11 +36,7 @@
     PyObject* __repr__ ()
     {
         std::string op = self->toString ();
-#if PY_MAJOR_VERSION >= 3
-        return PyBytes_FromStringAndSize (op.c_str (), op.length ());
-#else
-        return PyString_FromStringAndSize (op.c_str (), op.length ());
-#endif
+        return PyString_FromString (op.c_str ());
     }
 
     PyObject* __getitem__(const cdrKey_t& key)
@@ -81,8 +83,7 @@
                 }
             case neueda::CDR_STRING:
                 {
-                    o = PyString_FromStringAndSize (item->mString.c_str (),
-                                                    item->mString.size ());
+                    o = PyString_FromString (item->mString.c_str ());
                     return o;
                 }
             case neueda::CDR_DOUBLE:
@@ -135,7 +136,7 @@
         }
         else if (PyInt_Check (v))
         {
-            int val = PyInt_AsSsize_t (v);
+            int val = PyLong_AsLongLong (v);
             self->setInteger (key, val);
 
         }
@@ -211,11 +212,8 @@
             return NULL;
 
         PyObject* bytes;
-#if PY_MAJOR_VERSION >= 3
-        bytes = PyBytes_FromStringAndSize (buf, used);
-#else
         bytes = PyString_FromStringAndSize (buf, used);
-#endif
+
         delete[] buf;
         return bytes;
     }
@@ -224,18 +222,11 @@
     {
         char* buf;
         Py_ssize_t len;
-#if PY_MAJOR_VERSION >= 3
-        if (!PyBytes_Check (v))
-            return NULL;
-
-        if (!PyBytes_AsStringAndSize (v, &buf, &len))
-            return NULL;
-#else
         if (!PyString_Check (v))
             return NULL;
 
         PyString_AsStringAndSize (v, &buf, &len);
-#endif
+
         size_t used = 0;
         if (!self->deserialize (buf, used))
             return NULL;

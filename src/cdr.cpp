@@ -776,7 +776,7 @@ cdr::deserializeItem (const char* data, size_t& used)
             used += sizeof (int64_t);
 
             tm tm;
-            gmtime_r (&epoch, &tm);
+            gmtime_r ((time_t*)(&epoch), &tm);
 
             cdrItem item (CDR_DATETIME);
             item.mDateTime.mHour = tm.tm_hour;
