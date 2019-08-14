@@ -2,8 +2,8 @@
 # Copyright 2014-2018 Neueda Ltd.
 #
 # Include python
-find_package(PythonInterp REQUIRED)
-find_package(PythonLibs REQUIRED)
+find_package(PythonInterp ${PYTHON_VER} REQUIRED)
+find_package(PythonLibs ${PYTHON_VER} REQUIRED)
 include_directories(${PYTHON_INCLUDE_PATH})
 
 # set the flags for swig
