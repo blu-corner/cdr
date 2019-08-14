@@ -33,7 +33,7 @@ option(PYTHON "Enable Python bindings" OFF)
 option(CSHARP "Enable C# bindings" OFF)
 option(COVERAGE "Enable gcov coverage" OFF)
 option(EXAMPLES "Enable examples" ON)
-set(PYTHON_VER "3" CACHE STRING "Python version to build with")
+set(PYTHON_CONFIG "python-config" CACHE STRING "python-config for build env config")
 
 if(COVERAGE)
     set(COVERAGE_COMPILE_FLAGS "-g -O0 -coverage -fprofile-arcs -ftest-coverage")
