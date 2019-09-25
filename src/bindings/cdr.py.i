@@ -9,12 +9,24 @@
 #include <stdexcept>
 #include <sstream>
 #include <string>
+#include <iostream>
 #include "datetime.h"
 #include "Python.h"
 
 #if PY_MAJOR_VERSION >= 3
+
 #define PyString_AsStringAndSize PyBytes_AsStringAndSize
 #define PyString_FromStringAndSize PyBytes_FromStringAndSize
+#define PyString_Check PyUnicode_Check
+#define PyString_AsString PyUnicode_AsUTF8
+
+#else
+
+#define PyBytes_Check PyString_Check
+
+#define PyDateTime_IMPORT \
+    PyDateTimeAPI = (PyDateTime_CAPI*) PyCObject_Import((char *) "datetime", (char *) "datetime_CAPI"); \
+
 #endif
 
 %}
@@ -70,13 +82,10 @@
                      neueda::cdrArray::iterator it = item->mArray.begin();
                      for (; it != item->mArray.end (); ++it)
                      {
-                         for (neueda::cdr::iterator cdr_it = it->begin(); cdr_it != it->end(); ++cdr_it)
-                         {
-                             swig_type_info* i = SWIG_TypeQuery ("_p_neueda__cdr");
-                             PyObject* obj = SWIG_NewPointerObj(&(*it), i, SWIG_POINTER_OWN);
-                             Py_INCREF (obj);
-                             PyList_SetItem (o, idx++, obj);
-                         }
+                         swig_type_info* i = SWIG_TypeQuery ("_p_neueda__cdr");
+                         PyObject* obj = SWIG_NewPointerObj(&(*it), i, SWIG_POINTER_OWN);
+                         Py_INCREF (obj);
+                         PyList_SetItem (o, idx++, obj);
                      }
 
                     return o;
@@ -98,12 +107,7 @@
                 }
             case neueda::CDR_DATETIME:
                 {
-#if !(PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6)
                     PyDateTime_IMPORT;
-#else
-                    PyDateTimeAPI = (PyDateTime_CAPI*) PyCObject_Import((char *) "datetime",
-                            (char *) "datetime_CAPI");
-#endif
                     o = PyDateTime_FromDateAndTime (
                             item->mDateTime.mYear,
                             item->mDateTime.mMonth,
@@ -123,18 +127,8 @@
 
     void __setitem__(const cdrKey_t& key, PyObject* v)
     {
-#if !(PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6)
-        PyDateTime_IMPORT;
-#else
-        PyDateTimeAPI = (PyDateTime_CAPI*) PyCObject_Import((char *) "datetime",
-                (char *) "datetime_CAPI");
-#endif
-        if (PyString_Check (v))
-        {
-            char* val = PyString_AsString (v);
-            self->setString (key, val);
-        }
-        else if (PyInt_Check (v))
+		PyDateTime_IMPORT;
+        if (PyInt_Check (v))
         {
             int val = PyLong_AsLongLong (v);
             self->setInteger (key, val);
@@ -164,7 +158,7 @@
             dt.mHour = PyDateTime_DATE_GET_HOUR (v);
             dt.mMinute = PyDateTime_DATE_GET_MINUTE (v);
             dt.mSecond = PyDateTime_DATE_GET_SECOND (v);
-            dt.mNanosecond = PyDateTime_DATE_GET_MICROSECOND (v);
+            dt.mNanosecond = PyDateTime_DATE_GET_MICROSECOND (v) * 1000;
 
             self->setDateTime (key, dt);
         }
@@ -186,6 +180,10 @@
             }
 
             self->setArray (key, arr);
+        }
+        else if (PyString_Check (v))
+        {
+            self->setString (key, PyString_AsString (v));
         }
     }
 
@@ -222,7 +220,7 @@
     {
         char* buf;
         Py_ssize_t len;
-        if (!PyString_Check (v))
+        if (!PyBytes_Check (v))
             return NULL;
 
         PyString_AsStringAndSize (v, &buf, &len);

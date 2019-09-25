@@ -55,14 +55,25 @@ class TestCdr(unittest.TestCase):
         self.assertEqual(e.getString(1), f[0].getString(1))
         self.assertEqual(e.getString(2), f[0].getString(2))
 
-    def test_serialize_dt(self):
+    def test_datetime(self):
+        x = datetime.now()
         d = Cdr()
-        d[52] = datetime.now()
-        data = d.serialize()
+        d[52] = x
+
+        self.assertEqual(d[52], x)
+
+    def test_cdrarray(self):
+        d = Cdr()
+        d[52] = "AAPL"
 
         e = Cdr()
-        e.deserialize(data)
-        self.assertEqual(e[52], d[52])
+        e[52] = "FB"
+
+        f = Cdr()
+        f[0] = [d, e]
+
+        r = Cdr()
+        r[1000] = f
 
     def test_to_python_dict(self):
         d = Cdr()
