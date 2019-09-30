@@ -22,6 +22,15 @@ static PyObject* CDR_CLASS = NULL;
 static swig_type_info* CDR_TYPE = NULL;
 
 bool
+cdrCheckType (PyObject* o)
+{
+    if (PyObject_IsInstance (o, CDR_CLASS) != 1)
+        return false;
+
+    return true;
+}
+
+bool
 cdrImportModule ()
 {
     if (CDR_MODULE == NULL &&
