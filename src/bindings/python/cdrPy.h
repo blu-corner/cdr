@@ -22,6 +22,8 @@
 
 using namespace neueda;
 
+bool cdrCheckType (PyObject* o);
+
 bool cdrImportModule ();
 
 bool cdrPySetItem (const cdrKey_t& key, PyObject* v, cdr* d);
