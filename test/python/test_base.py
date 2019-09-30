@@ -91,6 +91,13 @@ class TestCdr(unittest.TestCase):
         d[3] = [e]
         assert(d.toDict()[3][0][12][0][21] == 400)
 
+    def test_from_python_dict(self):
+        x = {1: "AAPL"}
+        d = Cdr()
+        d.fromDict(x)
+        print(d.keys())
+
+        self.assertEqual(d.keys(), list(x.keys()))
 
 if __name__ == '__main__':
     unittest.main()
