@@ -89,7 +89,7 @@ class TestCdr(unittest.TestCase):
         d[2] = 200
 
         d[3] = [e]
-        assert(d.toPythonDict()[3][0][12][0][21] == 400)
+        assert(d.toDict()[3][0][12][0][21] == 400)
 
 
 if __name__ == '__main__':

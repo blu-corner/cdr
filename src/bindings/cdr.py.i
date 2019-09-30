@@ -12,6 +12,7 @@
 #include <iostream>
 #include "datetime.h"
 #include "Python.h"
+#include "cdrPy.h"
 
 #if PY_MAJOR_VERSION >= 3
 
@@ -128,63 +129,8 @@
     void __setitem__(const cdrKey_t& key, PyObject* v)
     {
 		PyDateTime_IMPORT;
-        if (PyInt_Check (v))
-        {
-            int val = PyLong_AsLongLong (v);
-            self->setInteger (key, val);
 
-        }
-        else if (PyFloat_Check (v))
-        {
-            double val = PyFloat_AsDouble (v);
-            self->setDouble (key, val);
-        }
-        else if (PyDate_CheckExact(v))
-        {
-            neueda::cdrDateTime dt;
-            dt.mYear = PyDateTime_GET_YEAR (v);
-            dt.mMonth = PyDateTime_GET_MONTH (v);
-            dt.mDay = PyDateTime_GET_DAY (v);
-
-            self->setDateTime (key, dt);
-        }
-        else if (PyDateTime_CheckExact(v))
-        {
-            neueda::cdrDateTime dt;
-            dt.mYear = PyDateTime_GET_YEAR (v);
-            dt.mMonth = PyDateTime_GET_MONTH (v);
-            dt.mDay = PyDateTime_GET_DAY (v);
-
-            dt.mHour = PyDateTime_DATE_GET_HOUR (v);
-            dt.mMinute = PyDateTime_DATE_GET_MINUTE (v);
-            dt.mSecond = PyDateTime_DATE_GET_SECOND (v);
-            dt.mNanosecond = PyDateTime_DATE_GET_MICROSECOND (v) * 1000;
-
-            self->setDateTime (key, dt);
-        }
-        else if (PyList_Check (v))
-        {
-            neueda::cdrArray arr;
-            swig_type_info* i = SWIG_TypeQuery ("_p_neueda__cdr");
-            Py_ssize_t len    = PyList_Size (v);
-
-            for (Py_ssize_t idx = 0; idx < len; ++idx)
-            {
-                PyObject* py_obj = PyList_GetItem (v, idx);
-                neueda::cdr* obj = NULL;
-
-                SWIG_ConvertPtr (py_obj, (void **)&obj, i, 0);
-
-                if (obj != NULL)
-                    arr.push_back (*obj);
-            }
-
-            self->setArray (key, arr);
-        }
-        else if (PyString_Check (v))
-        {
-            self->setString (key, PyString_AsString (v));
-        }
+        cdrPySetItem (key, v, self);
     }
 
     PyObject* keys () {
@@ -233,7 +179,28 @@
         return Py_None;
     }
 
-    PyObject* toPythonDict ()
+    void fromDict (PyObject* pydict)
+    {
+        if (!PyDict_Check (pydict))
+            return;
+
+        Py_ssize_t pos = 0;
+        PyObject *key, *value;
+
+        while (PyDict_Next(pydict, &pos, &key, &value))
+        {
+            if (!PyInt_Check (key))
+                return;
+
+            cdrKey_t k = PyLong_AsLong (key);
+            if (!cdrPySetItem (k, value, self))
+                return;
+        }
+
+        return;
+    }
+
+    PyObject* toDict ()
     {
         PyGILState_STATE gil = PyGILState_Ensure ();
         PyObject* dict = PyDict_New ();
@@ -255,7 +222,7 @@
                      aIt != it->second.mArray.end ();
                      ++aIt)
                 {
-                    d = neueda_cdr_toPythonDict (const_cast<neueda::cdr*>(&(*aIt)));
+                    d = neueda_cdr_toDict (const_cast<neueda::cdr*>(&(*aIt)));
                     PyList_SetItem (cdrs, idx++, d);
                 }
                 PyDict_SetItem (dict, key, cdrs);
@@ -271,6 +238,7 @@
         PyGILState_Release (gil);
         return dict;
     }
+
 }
 
 %include "cdr.i"

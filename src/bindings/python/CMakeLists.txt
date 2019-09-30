@@ -50,7 +50,7 @@ link_libraries(${PYTHON_LDFLAGS})
 
 # Add swig module
 swig_add_module(cdr python ../cdr.py.i)
-swig_link_libraries(cdr cdr ${PYTHON_LIBS})
+swig_link_libraries(cdr cdr cdrpy ${PYTHON_LIBS})
 
 # Files to install with Python
 set(PYTHON_INSTALL_FILES
@@ -62,7 +62,28 @@ install(TARGETS _cdr
 install(FILES ${PYTHON_INSTALL_FILES}
   DESTINATION lib/python)
 
-set(SWIG_PY_RUNTIME ${CMAKE_INSTALL_PREFIX}/include/swigPyRuntime.h)
+set(SWIG_PY_RUNTIME ${CMAKE_CURRENT_BINARY_DIR}/swigPyRuntime.h)
 if(NOT EXISTS ${SWIG_PY_RUNTIME})
-    install(CODE "execute_process(COMMAND swig -c++ -python -external-runtime ${SWIG_PY_RUNTIME})")
+    add_custom_command(OUTPUT ${SWIG_PY_RUNTIME}
+                       COMMAND swig -c++ -python -external-runtime ${SWIG_PY_RUNTIME})
 endif(NOT EXISTS ${SWIG_PY_RUNTIME})
+
+install(FILES ${SWIG_PY_RUNTIME} DESTINATION include)
+install(FILES cdrPy.h DESTINATION include/cdr)
+
+add_custom_target(generate-swig-runtime DEPENDS ${SWIG_PY_RUNTIME})
+
+set(CDRPY_SOURCES cdrPy.cpp)
+
+include_directories(
+    ${CMAKE_CURRENT_BINARY_DIR}
+  ${PROJECT_SOURCE_DIR}/src/bindings/python
+  ${CMAKE_INSTALL_PREFIX}/include
+  ${CMAKE_INSTALL_PREFIX}/include/cdr
+  )
+
+add_library(cdrpy SHARED ${CDRPY_SOURCES})
+add_dependencies(cdrpy generate-swig-runtime cdr)
+target_link_libraries(cdrpy cdr)
+
+install(TARGETS cdrpy DESTINATION lib)
