@@ -44,6 +44,7 @@ if(COVERAGE)
 endif(COVERAGE)
 
 if(JSON)
+    add_definitions(-DJSON)
     find_package(jsoncpp REQUIRED)
 endif(JSON)
 

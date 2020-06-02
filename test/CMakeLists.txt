@@ -18,9 +18,16 @@ if(NOT WIN32)
     set (LIBS "${LIBS}"
               pthread)
 endif()
+
+if(JSON)
+    include_directories(//usr/include/jsoncpp)
+    set (LIBS "${LIBS}"
+              jsoncpp)
+endif()
   
 add_executable(unittest ${SRC_FILES})
 target_link_libraries(unittest ${LIBS})
+
 add_dependencies(unittest googletest)
 
 add_test(NAME unittest

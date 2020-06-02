@@ -15,7 +15,9 @@ if(WIN32)
 endif()
 
 if(JSON)
-    include_directories(jsoncpp)
+    set (CDR_SOURCES "${CDR_SOURCES}"
+                     cdrJson.cpp)
+    include_directories(/usr/include/jsoncpp)
 endif()
 
 install(FILES ${CDR_HEADERS}
