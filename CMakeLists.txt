@@ -45,7 +45,16 @@ endif(COVERAGE)
 
 if(JSON)
     add_definitions(-DJSON)
-    find_package(jsoncpp REQUIRED)
+
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(JSONCPP jsoncpp)
+
+    if (JSONCPP_LIBRARIES AND JSONCPP_INCLUDE_DIRS)
+        message(STATUS "jsoncpp-found: " ${JSONCPP_LIBRARIES})
+        message(STATUS "jsoncpp-include-dirs: " ${JSONCPP_INCLUDE_DIRS})
+    else()
+        message(FATAL_ERROR "jsoncpp-not-found")
+    endif()
 endif(JSON)
 
 # set version info

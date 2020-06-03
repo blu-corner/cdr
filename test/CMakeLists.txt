@@ -20,9 +20,9 @@ if(NOT WIN32)
 endif()
 
 if(JSON)
-    include_directories(//usr/include/jsoncpp)
+    include_directories(${JSONCPP_INCLUDE_DIRS})
     set (LIBS "${LIBS}"
-              jsoncpp)
+              ${JSONCPP_LIBRARIES})
 endif()
   
 add_executable(unittest ${SRC_FILES})
