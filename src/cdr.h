@@ -8,6 +8,7 @@
 #define __STDC_LIMIT_MACROS
 #endif
 
+#include <inttypes.h>
 #include <errno.h>
 #include <string.h>
 #include <stdarg.h>
@@ -21,6 +22,9 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#ifdef JSON
+#include "json/json.h"
+#endif
 
 #ifdef WIN32
 #include "asprintf.h"
@@ -409,6 +413,24 @@ public:
      */
     string toString () const;
 
+#ifdef JSON
+    /**
+     * Convert the given cdr to a JSON string. Assigns err and returns false on failure
+     *
+     * @param j
+     * @param err
+     */
+    bool toJson (string& j, string& err) const;
+
+    /**
+     * Load the cdr from the given json string. Assign err and return false on failure
+     *
+     * @param j
+     * @param err
+     */
+    bool fromJson (const string& j, string& err);
+#endif
+
     class iterator
     {
     public:
@@ -580,6 +602,19 @@ private:
 
     bool deserializeItem (const char* data,
                           size_t& used);
+
+#ifdef JSON
+    bool fromJsonValue (Json::Value& root,
+                        string& err);
+
+    bool toJsonValue (Json::Value& r,
+                      string& err) const;
+
+    bool itemToJsonValue (const cdrItem* item,
+                          Json::Value& root,
+                          string& err) const;
+
+#endif
 
     u_int          mNextIndex;
     orderedItemMap mOrdered;

@@ -9,7 +9,7 @@ include_directories(
 
 link_directories(${CMAKE_BINARY_DIR}/googletest/lib)
 
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cc)
+set (TEST_SOURCES main.cc cdrTest.cc)
 set (LIBS cdr
           gtest
           gmock)
@@ -18,9 +18,18 @@ if(NOT WIN32)
     set (LIBS "${LIBS}"
               pthread)
 endif()
+
+if(JSON)
+    include_directories(${JSONCPP_INCLUDE_DIRS})
+    set (LIBS "${LIBS}"
+              ${JSONCPP_LIBRARIES})
+    set (TEST_SOURCES "${TEST_SOURCES}"
+                      cdrJsonTest.cc)
+endif()
   
-add_executable(unittest ${SRC_FILES})
+add_executable(unittest ${TEST_SOURCES})
 target_link_libraries(unittest ${LIBS})
+
 add_dependencies(unittest googletest)
 
 add_test(NAME unittest

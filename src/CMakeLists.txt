@@ -14,6 +14,12 @@ if(WIN32)
                   vasprintf.cpp)
 endif()
 
+if(JSON)
+    set (CDR_SOURCES "${CDR_SOURCES}"
+                     cdrJson.cpp)
+    include_directories(${JSONCPP_INCLUDE_DIRS})
+endif()
+
 install(FILES ${CDR_HEADERS}
   DESTINATION include/cdr
     )
@@ -22,8 +28,11 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/src
   )
 
-
 add_library(cdr SHARED ${CDR_SOURCES})
+
+if(JSON)
+    target_link_libraries(cdr ${JSONCPP_LIBRARIES})
+endif()
 
 install(TARGETS cdr
   EXPORT ${PROJECT_NAME}

@@ -32,6 +32,7 @@ option(JAVA "Enable Java bindings" OFF)
 option(PYTHON "Enable Python bindings" OFF)
 option(CSHARP "Enable C# bindings" OFF)
 option(COVERAGE "Enable gcov coverage" OFF)
+option(JSON "Enable json encode/decode support" OFF)
 option(EXAMPLES "Enable examples" ON)
 set(PYTHON_CONFIG "python-config" CACHE STRING "python-config for build env config")
 
@@ -41,6 +42,20 @@ if(COVERAGE)
     set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}" )
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}" ) 
 endif(COVERAGE)
+
+if(JSON)
+    add_definitions(-DJSON)
+
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(JSONCPP jsoncpp)
+
+    if (JSONCPP_LIBRARIES AND JSONCPP_INCLUDE_DIRS)
+        message(STATUS "jsoncpp-found: " ${JSONCPP_LIBRARIES})
+        message(STATUS "jsoncpp-include-dirs: " ${JSONCPP_INCLUDE_DIRS})
+    else()
+        message(FATAL_ERROR "jsoncpp-not-found")
+    endif()
+endif(JSON)
 
 # set version info
 set(CDR_MAJOR_VERSION 0)

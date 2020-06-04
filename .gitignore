@@ -31,3 +31,9 @@
 *.exe
 *.out
 *.app
+
+# general
+build/
+.ccls-cache
+tags
+.vim/
