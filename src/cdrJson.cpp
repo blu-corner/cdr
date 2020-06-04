@@ -20,7 +20,7 @@ cdr::toJson (string& j,
 
 bool
 cdr::toJsonValue (Json::Value& r,
-                     string& err) const
+                  string& err) const
 {
     for (itemMap::const_iterator itr = mItems.begin();
          itr != mItems.end();
@@ -35,8 +35,8 @@ cdr::toJsonValue (Json::Value& r,
 
 bool
 cdr::itemToJsonValue (const cdrItem* item,
-                  Json::Value& root,
-                  string& err) const
+                      Json::Value& root,
+                      string& err) const
 {
     char key[21];
     sprintf (key, "%" PRId32, item->mKey);
@@ -102,24 +102,21 @@ cdr::fromJson (const string& j, string& err)
 bool
 cdr::fromJsonValue (Json::Value& root, string& err)
 {
-    size_t i = 0;
     cdrKey_t key = 0;
+    char* endptr;
 
     for (Json::ValueIterator it = root.begin ();
          it != root.end ();
          ++it)
     {
         key = 0;
-        i = 0;
+        errno = 0;
 
-        while (it.name ()[i] != '\0')
+        key = strtol (it.name ().c_str (), &endptr, 10);
+        if (errno == EINVAL || *endptr != '\0')
         {
-            if (!isdigit (it.name ()[i]))
-            {
-                err.assign ("numeric keys only supported");
-                return false;
-            }
-            key = (key * 10) + (it.name ()[i++] - '0');
+            err.assign ("numeric keys only supported");
+            return false;
         }
 
         if (it->isInt ())
