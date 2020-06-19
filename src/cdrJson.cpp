@@ -15,6 +15,7 @@ cdr::toJson (string& j,
 
     Json::FastWriter fw;
     j.assign (fw.write (root));
+    j.erase (j.size () - 1);
     return true;
 }
 
