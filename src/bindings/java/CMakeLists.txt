@@ -14,7 +14,7 @@ set_source_files_properties(../cdr.java.i PROPERTIES CPLUSPLUS ON)
 
 # Add swig module
 add_compile_options(-fno-strict-aliasing)
-swig_add_library(Cdr LANGUAGE java SOURCES ../cdr.java.i)
+swig_add_module(Cdr java ../cdr.java.i)
 swig_link_libraries(Cdr cdr ${JNI_LIBRARIES})
 
 set(CMAKE_JAR_CLASSES_PREFIX com/neueda/cdr)
