@@ -23,7 +23,7 @@ set_source_files_properties(../cdr.csharp.i PROPERTIES CPLUSPLUS ON)
 
 # Add swig module
 add_compile_options(-fno-strict-aliasing)
-swig_add_module(CdrCsharp csharp ../cdr.csharp.i)
+swig_add_library(CdrCsharp LANGUAGE csharp SOURCES ../cdr.csharp.i)
 swig_link_libraries(CdrCsharp cdr)
 
 # Files to install with csharp

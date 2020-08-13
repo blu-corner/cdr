@@ -49,7 +49,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PYTHON_INCLUDE_PATH}")
 link_libraries(${PYTHON_LDFLAGS})
 
 # Add swig module
-swig_add_module(cdr python ../cdr.py.i)
+swig_add_LIBRARY(cdr LANGUAGE python SOURCES ../cdr.py.i)
 swig_link_libraries(cdr cdr cdrpy ${PYTHON_LIBS})
 
 # Files to install with Python
