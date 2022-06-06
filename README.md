@@ -1,3 +1,5 @@
+# PROJECT MOVED TO [Version1 Org/cdr](https://github.com/Version1/cdr). THIS REPOSITORY WILL NO LONGER BE MAINTAINED.
+
 # cdr (Common Data Representation) [![Build Status](https://travis-ci.com/blu-corner/cdr.svg?branch=master)](https://travis-ci.com/blu-corner/cdr) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=blu-corner_cdr&metric=alert_status)](https://sonarcloud.io/dashboard?id=blu-corner_cdr)
 
 
